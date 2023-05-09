@@ -1,0 +1,97 @@
+* {
+  transition: all 200ms linear;
+}
+
+button:active {
+  transform: scale(1.05);
+}
+
+/* NavBar */
+
+.md-menu {
+  max-width: min-content !important;
+}
+
+.navbar-toggler {
+  box-shadow: none !important;
+}
+
+.menu-visible {
+  height: 30px !important;
+  overflow: hidden;
+  border-top: 1px solid lightgray !important;
+}
+
+.menu-hidden {
+  height: 0px !important;
+  overflow: hidden;
+}
+
+.navbar-toggler {
+  padding: 1px 6px !important;
+}
+
+nav svg:hover {
+  color: black;
+}
+
+/* Carousel */
+.carousel {
+  max-width: 1700px;
+}
+
+.carousel-item {
+  height: 55vh;
+}
+
+#carousel-img {
+  object-fit: cover;
+}
+
+#carousel-product, #carousel-product a {
+  color:hsl(0, 0%, 75%) !important;
+}
+
+#view-product:hover #product-line {
+  animation-name: lineAni;
+  animation-duration: 850ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+#product-line {
+  height: 2px;
+  border-radius: 50%;
+  width: 100%;
+  transition: all 1s linear; 
+  background: hsl(0, 0%, 75%); 
+}
+
+@keyframes lineAni {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+/* Top product */
+
+#product-image {
+  object-fit: contain;
+  aspect-ratio: 1 / 1.4;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#product-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 10px 15px 10px hsl(0, 0%, 0%, 25%);
+}
+
+/* Category */
+#category-thumbnail{
+  height: 75px;
+}
