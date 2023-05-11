@@ -1,36 +1,49 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+// Impoert Swiper Style
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+
+// Import required module
+import { Autoplay, Pagination, Navigation } from 'swiper'
 
 function Carousel({products}) {
 
-    // const [showCase, setShowCase] = useState()
     const showCase = []
     const slide = 3
 
     const randomNo = (num) => {
         return Math.floor(Math.random() * num)
     }
-
-    // console.log(products)
+    
     for (let i = 0; i < slide; i++) {
         showCase.push(products[randomNo(20)])
     }
 
-
-
-
-    // showCase.map(products => {
-    //     console.log(products.title)
-    // })
-
   return (
     <React.Fragment>
-        <div id="carousel" className="carousel slide mx-auto">
-        <div className="carousel-inner">
+        <Swiper
+            spaceBetween={30}
+            centeredSlides={true}
+            loop={true}
+            autoplay={{
+                delay: 3000,
+                disableOnInteraction: false
+            }}
+            pagination={{
+                clickable: true
+            }}
+            navigation={true}
+            modules={[Autoplay, Pagination, Navigation]}
+            className='mySwiper mx-auto'
+        >
             {/* Carousel Item */}
-            
             {showCase.map((product, index) => {
-                return (                        
-                    <div key={index} className="carousel-item active">
+            return (
+                <SwiperSlide key={index} className='slide'>
                         <img src={product.image} className='img img-fluid w-100 position-absolute top-0 left-0 z-n1' id='carousel-img' alt="" />
                         <div className="container d-flex align-items-center h-100">
                             <div className="w-50 ms-5 ps-3" id='carousel-product'>
@@ -44,20 +57,12 @@ function Carousel({products}) {
                             </div>
                             
                         </div>
-                    </div>
-                )
-            })}
-        </div>
+                </SwiperSlide>
+                        
+            )
+        })}
 
-            <button className="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon p-2" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-            </button>
-        </div>
+        </Swiper>            
     </React.Fragment>
   )
 }

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar'
 import Homepage from './pages/Homepage';
 import Db from './db.json'
 import Footer from './components/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Shop from './pages/Shop';
+import AboutUs from './pages/AboutUs';
+import FAQ from './pages/FAQ';
 
 function App() {
-
-  // const [products, setProducts] = useState([])
-
-  // useEffect(() => {
 
   //   fetch('https://fakestoreapi.com/products')
   //     .then(res => res.json())
@@ -17,15 +17,22 @@ function App() {
   //       setProducts(data)
   //     })
   //     .catch(error => console.log(error))
-    
-  // }, [])
 
-  const products = Db
+  let products = Db
+
+  console.log(Math.round(4.4))
 
   return (
-    <>
+    <>  
       <Navbar />
-      <Homepage products={products} />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Homepage products={products} />} />
+          <Route path='shop' element={<Shop products={products} />} />
+          <Route path='about' element={<AboutUs />} />
+          <Route path='faq' element={<FAQ />} />
+        </Routes>
+      </BrowserRouter>
       <Footer />
     </>
   );

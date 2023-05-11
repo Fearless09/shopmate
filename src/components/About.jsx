@@ -1,8 +1,8 @@
 import React from 'react'
 
-function AboutUs() {
+function About() {
   return (
-    <div className='container mt-5'>
+    <div className={`container mt-5`}>
         <h4 className='text-uppercase'>About Us</h4>
         <p className="lead mt-3">At Shopmate, we're passionate about making online shopping more convenient and accessible for everyone. Our mission is to create a seamless shopping experience that makes it easy for customers to find the products they need and get them delivered straight to their doorsteps.</p>
 
@@ -19,4 +19,4 @@ function AboutUs() {
   )
 }
 
-export default AboutUs
+export default About

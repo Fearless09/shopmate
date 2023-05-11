@@ -6,6 +6,10 @@ button:active {
   transform: scale(1.05);
 }
 
+.avoidNav {
+  margin-top: 100px !important;
+}
+
 /* NavBar */
 
 .md-menu {
@@ -35,21 +39,36 @@ nav svg:hover {
   color: black;
 }
 
-/* Carousel */
-.carousel {
-  max-width: 1700px;
+/* Model */
+.modal-footer {
+  border-top: none;
 }
 
-.carousel-item {
+/* Category */
+.cat-container {
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Carousel */
+.mySwiper {
+  max-width: 1700px;
   height: 55vh;
+}
+
+
+
+.swiper-button-next:after, .swiper-button-prev:after {
+  color: hsl(0, 0%, 75%);
 }
 
 #carousel-img {
   object-fit: cover;
+
 }
 
 #carousel-product, #carousel-product a {
-  color:hsl(0, 0%, 75%) !important;
+  color: hsl(0, 0%, 75%) !important;
 }
 
 #view-product:hover #product-line {
@@ -63,8 +82,8 @@ nav svg:hover {
   height: 2px;
   border-radius: 50%;
   width: 100%;
-  transition: all 1s linear; 
-  background: hsl(0, 0%, 75%); 
+  transition: all 1s linear;
+  background: hsl(0, 0%, 75%);
 }
 
 @keyframes lineAni {
@@ -92,6 +111,6 @@ nav svg:hover {
 }
 
 /* Category */
-#category-thumbnail{
+#category-thumbnail {
   height: 75px;
 }

@@ -2,18 +2,22 @@ import React from 'react'
 import Carousel from '../components/Carousel'
 import Sortsearch from '../components/Sortsearch'
 import TopProduct from '../components/TopProduct'
-import AboutUs from '../components/AboutUs'
+import AboutUs from './AboutUs'
 import Category from '../components/Category'
+import About from '../components/About'
 
 function Homepage({products}) {
+  let avoidNav = false
   return (
     <React.Fragment>
+      <div className="avoidNav"></div>
         {/* Carousel */}
         <Carousel products={products} />
         <Category products={products} />
+        <hr />
         <Sortsearch />
-        <TopProduct products={products} />
-        <AboutUs />
+        <hr />
+        <TopProduct products={products} />        <About />
         
     </React.Fragment>
   )
