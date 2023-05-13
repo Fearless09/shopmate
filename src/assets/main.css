@@ -48,6 +48,7 @@ nav svg:hover {
 .cat-container {
   max-width: 900px;
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* Carousel */

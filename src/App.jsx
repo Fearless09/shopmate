@@ -10,6 +10,7 @@ import Shop from './pages/Shop';
 import AboutUs from './pages/AboutUs';
 import FAQ from './pages/FAQ';
 import ProductDetails from './pages/ProductDetails';
+import PolicynToS from './pages/PolicynToS';
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
           <Route path='about' element={<AboutUs />} />
           <Route path='faq' element={<FAQ />} />
           <Route path='product-detail/:id' element={<ProductDetails products={products} />} />
-          
+          <Route path='/ToS' element={<PolicynToS />} />
         </Routes>
       </BrowserRouter>
       <Footer />

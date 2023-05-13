@@ -23,7 +23,7 @@ function Footer() {
                 {/* Policy and ToS */}
                 <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-lg-0">
                     <p className="lead fw-semibold">Privacy Policy and ToS</p>
-                    <p className="lead">To read our privacy policy and terms of service ToA, <a href="#" className='btn px-0 text-decoration-underline'>click here</a></p>
+                    <p className="lead">To read our privacy policy and terms of service ToA, <a href="/ToS" className='btn px-0 text-decoration-underline'>click here</a></p>
                 </div>
                 {/* FAQ */}
                 <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-lg-0">
