@@ -62,7 +62,7 @@ function FAQ() {
                 </code>
             </div>
 
-            <p className="lead">If you have any other questions or concerns, please don't hesitate to reach out to our customer service team. We're here to help!</p>
+            <p className="lead text-center pt-3">If you have any other questions or concerns, please don't hesitate to reach out to our customer service team. We're here to help!</p>
 
         </div>
     )

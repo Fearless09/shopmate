@@ -49,7 +49,7 @@ function Carousel({products}) {
                             <div className="w-50 ms-5 ps-3" id='carousel-product'>
                                 <h1>{product.title}</h1>
 
-                                <a href="#" className="btn btn-lg text-light fs-4 px-0 py-1" id='view-product'>
+                                <a href={`product-detail/${product.id}`} className="btn btn-lg text-light fs-4 px-0 py-1" id='view-product'>
                                     view product
                                     <span className="d-block mt-1" id='product-line'></span>
                                 </a>

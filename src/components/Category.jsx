@@ -1,8 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function Category({products}) {
-
-  
+function Category({products}) {  
 
   return (
     <div className='text-center pt-4'>

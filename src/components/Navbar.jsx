@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import Cart from './Cart'
+import Login from './LoginRegister'
 
 function Navbar() {
 
@@ -9,6 +12,9 @@ function Navbar() {
   return (
     <>
       <nav className="navbar navbar-expand-md bg-body-tertiary position-fixed z-2 top-0 left-0 w-100">
+        {/* <Link>
+        
+        </Link> */}
         <div className="container position-relative py-3">
 
           {/* Menu btn */}
@@ -20,13 +26,13 @@ function Navbar() {
           <div className={`collapse navbar-collapse px-4 px-md-0 d-none d-md-block md-menu`} id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-md-0">
               <li className="nav-item">
-                <a className="nav-link fw-semibold fw-md-normal" href='shop'>Shop</a>
+                <a className="nav-link fw-semibold fw-md-normal" href='/shop'>Shop</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-semibold fw-md-normal" href="about">About</a>
+                <a className="nav-link fw-semibold fw-md-normal" href="/about">About</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-semibold fw-md-normal" href="faq">FAQ</a>
+                <a className="nav-link fw-semibold fw-md-normal" href="/faq">FAQ</a>
               </li>
             </ul>
           </div>
@@ -42,18 +48,18 @@ function Navbar() {
           </div>
 
           {/* Cart and User */}
-          <div className=''>
-          <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn btn-sm fs-6 text-muted'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart3" viewBox="0 0 16 16">
-              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-            </svg>
-          </button>
+          <div>
+            <button data-bs-toggle="modal" data-bs-target="#cartModal" className='btn btn-sm fs-6 text-muted'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart3" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </svg>
+            </button>
 
-          <a href="/" className='btn btn-sm fs-6 text-muted'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-            </svg>  
-          </a>
+            <button data-bs-toggle="modal" data-bs-target="#loginModal" className='btn btn-sm fs-6 text-muted'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+              </svg>  
+            </button>
           </div>
           
 
@@ -65,41 +71,21 @@ function Navbar() {
           <div className={`collapse navbar-collapse`} id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-md-0 flex-row justify-content-center">
               <li className="nav-item">
-                <a className="nav-link fw-semibold px-2" aria-current="page" href="shop">Shop</a>
+                <a className="nav-link fw-semibold px-2" aria-current="page" href="/shop">Shop</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-semibold px-2" href="about">About Us</a>
+                <a className="nav-link fw-semibold px-2" href="/about">About Us</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-semibold px-2" href="faq">FAQ</a>
+                <a className="nav-link fw-semibold px-2" href="/faq">FAQ</a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
 
-      {/* Modal */}
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Cart</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div className="modal-body">
-              ...
-            </div>
-
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary">
-                Check Out
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Cart />
+      <Login />
 
     </>
   )

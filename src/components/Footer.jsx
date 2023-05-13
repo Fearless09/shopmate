@@ -10,25 +10,25 @@ function Footer() {
             </div>
             <div className="row mt-5">
                 {/* Contact Us */}
-                <div className="col-6 col-lg-3 px-3">
+                <div className="col-sm-6 col-lg-3 px-3">
                     <p className="lead fw-semibold">Contact Us</p>
                     <span className="lead">Email: <a href='mailto:support@shopmate.com' className='text-secondary'>support@shopmate.com</a></span>
                     <p className="lead my-2 d-flex"><strong>Phone:</strong><span className='ms-2'>+234-701-234-5678</span></p>
                 </div>
                 {/* Payment and Shipping */}
-                <div className="col-6 col-lg-3 px-3">
+                <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-sm-0">
                     <p className="lead fw-semibold">Payment and Shipping</p>
                     <p className="lead">We accept major credit cards and PayPal. Shipping is free on all orders over $50.</p>
                 </div>
                 {/* Policy and ToS */}
-                <div className="col-6 col-lg-3 px-3 mt-5 mt-lg-0">
+                <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-lg-0">
                     <p className="lead fw-semibold">Privacy Policy and ToS</p>
                     <p className="lead">To read our privacy policy and terms of service ToA, <a href="#" className='btn px-0 text-decoration-underline'>click here</a></p>
                 </div>
                 {/* FAQ */}
-                <div className="col-6 col-lg-3 px-3 mt-5 mt-lg-0">
+                <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-lg-0">
                     <p className="lead fw-semibold">FAQ</p>
-                    <p className="lead">To read our frequently asked question, <a href="faq" className='btn px-0 text-decoration-underline'>click here</a></p>
+                    <p className="lead">To read our frequently asked question, <a href="/faq" className='btn px-0 text-decoration-underline'>click here</a></p>
                 </div>
             </div>
             <p className="lead fw-semibold text-center mt-4">
