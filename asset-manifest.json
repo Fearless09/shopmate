@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/shopmate/static/css/main.0546e24f.css",
+    "main.js": "/shopmate/static/js/main.bc006789.js",
+    "index.html": "/shopmate/index.html",
+    "main.0546e24f.css.map": "/shopmate/static/css/main.0546e24f.css.map",
+    "main.bc006789.js.map": "/shopmate/static/js/main.bc006789.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0546e24f.css",
+    "static/js/main.bc006789.js"
+  ]
+}
