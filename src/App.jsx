@@ -2,15 +2,15 @@ import React from 'react';
 import './App.css';
 import Db from './db.json'
 // import { getProducts } from './ProductAPI';
-import Navbar from './components/Navbar'
 import Homepage from './pages/Homepage';
-import Footer from './components/Footer';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Shop from './pages/Shop';
 import AboutUs from './pages/AboutUs';
 import FAQ from './pages/FAQ';
 import ProductDetails from './pages/ProductDetails';
 import PolicynToS from './pages/PolicynToS';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -27,19 +27,19 @@ function App() {
   // }, []);
 
   return (
-    <>  
-      <Navbar />
-      <BrowserRouter>
+    <>        
+      <Router>
+        <Navbar />
         <Routes>
           <Route index element={<Homepage products={products} />} />
-          <Route path='shop' element={<Shop products={products} />} />
-          <Route path='about' element={<AboutUs />} />
-          <Route path='faq' element={<FAQ />} />
-          <Route path='product-detail/:id' element={<ProductDetails products={products} />} />
-          <Route path='/ToS' element={<PolicynToS />} />
+          <Route path='shopmate/shop' element={<Shop products={products} />} />
+          <Route path='shopmate/about' element={<AboutUs />} />
+          <Route path='shopmate/faq' element={<FAQ />} />
+          <Route path='shopmate/product-detail/:id' element={<ProductDetails products={products} />} />
+          <Route path='shopmate/ToS' element={<PolicynToS />} />
         </Routes>
-      </BrowserRouter>
-      <Footer />
+        <Footer />
+      </Router>
     </>
   );
 }

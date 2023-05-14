@@ -48,9 +48,9 @@ function TopProduct({products}) {
                     return (
                         <div key={product.id} className='col-sm-6 col-md-4 col-xxl-3 p-4 p-xl-5' id='product'>
                             <div className='p-4'>
-                                <a href={`product-detail/${product.id}`}>
+                                <Link to={`/product-detail/${product.id}`}>
                                     <img src={product.image} className='img card-img' id='product-image' alt="product" onClick={(e) => productImage(e, product)} />
-                                </a>
+                                </Link>
                             </div>
                             <p className="lead mb-1">{product.title}</p>
                             <div className="d-flex align-items-center justify-content-between">

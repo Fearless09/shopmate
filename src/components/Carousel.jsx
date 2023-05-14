@@ -9,6 +9,7 @@ import 'swiper/css/navigation'
 
 // Import required module
 import { Autoplay, Pagination, Navigation } from 'swiper'
+import { Link } from 'react-router-dom'
 
 function Carousel({products}) {
 
@@ -25,6 +26,7 @@ function Carousel({products}) {
 
   return (
     <React.Fragment>
+        {/* <Link to='/shop'>Link</Link> */}
         <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -49,10 +51,10 @@ function Carousel({products}) {
                             <div className="w-50 ms-5 ps-3" id='carousel-product'>
                                 <h1>{product.title}</h1>
 
-                                <a href={`product-detail/${product.id}`} className="btn btn-lg text-light fs-4 px-0 py-1" id='view-product'>
+                                <Link to={`/product-detail/${product.id}`} className="btn btn-lg text-light fs-4 px-0 py-1" id='view-product'>
                                     view product
                                     <span className="d-block mt-1" id='product-line'></span>
-                                </a>
+                                </Link>
                                 
                             </div>
                             

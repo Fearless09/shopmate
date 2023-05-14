@@ -2,12 +2,11 @@ import React from 'react'
 import Carousel from '../components/Carousel'
 import Sortsearch from '../components/Sortsearch'
 import TopProduct from '../components/TopProduct'
-import AboutUs from './AboutUs'
 import Category from '../components/Category'
 import About from '../components/About'
 
 function Homepage({products}) {
-  let avoidNav = false
+
   return (
     <React.Fragment>
       <div className="avoidNav"></div>
@@ -18,7 +17,6 @@ function Homepage({products}) {
         <Sortsearch />
         <hr />
         <TopProduct products={products} />        <About />
-        
     </React.Fragment>
   )
 }
