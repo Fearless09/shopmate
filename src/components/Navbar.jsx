@@ -2,8 +2,22 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Cart from './Cart'
 import Login from './LoginRegister'
+import UserProfile from './UserProfile'
 
-function Navbar() {
+function Navbar({ cartItem, setCartItem }) {
+
+  const [user, setUser] = useState()
+
+
+  function onSuccess(res) {
+    setUser(res.profileObj)
+    // console.log("Login Successfully. Current User: ", res.profileObj)
+  }
+
+  function onFailure(res) {
+    setUser([])
+    console.log("Login Failed. Res: ", res)
+  }
 
   const [menu, setMenu] = useState(false)
 
@@ -20,7 +34,8 @@ function Navbar() {
           </button>
 
           {/* Menu displayed on md screen */}
-          <div className={`collapse navbar-collapse px-4 px-md-0 d-none d-md-block md-menu`} id="navbarSupportedContent">
+          {/* id="navbarSupportedContent" */}
+          <div className={`collapse navbar-collapse px-4 px-md-0 d-none d-md-block md-menu`}>
             <ul className="navbar-nav mb-2 mb-md-0">
               <li className="nav-item">
                 <Link className="nav-link fw-semibold fw-md-normal" to='/shop'>Shop</Link>
@@ -46,17 +61,30 @@ function Navbar() {
 
           {/* Cart and User */}
           <div>
-            <button data-bs-toggle="modal" data-bs-target="#cartModal" className='btn btn-sm fs-6 text-muted'>
+            {/* Cart */}
+            <button data-bs-toggle="modal" data-bs-target="#cartModal" className='btn btn-sm fs-6 text-muted position-relative'>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart3" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
               </svg>
+              {cartItem.length === 0 ? '': <span className="badge text-white position-absolute top-0 start-100 translate-middle rounded-circle p-2">{cartItem.length}</span> }
+              
             </button>
 
-            <button data-bs-toggle="modal" data-bs-target="#loginModal" className='btn btn-sm fs-6 text-muted'>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-              </svg>  
-            </button>
+            {/* User */}
+            {user === undefined ? (
+              <button data-bs-toggle="modal" data-bs-target="#loginModal" className='btn btn-sm fs-6 text-muted ms-2'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                </svg>
+                
+              </button>
+            ) : (
+              <button data-bs-toggle="modal" data-bs-target="#profileModal" className='btn btn-sm fs-6 text-muted ms-2' style={{width: '40px', height: '35px'}}>
+                <img src={user.imageUrl} className='img img-fluid w-100'  alt="" />
+                
+              </button>
+            )}
+            
           </div>
           
 
@@ -68,21 +96,22 @@ function Navbar() {
           <div className={`collapse navbar-collapse`} id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-md-0 flex-row justify-content-center">
               <li className="nav-item">
-                <a className="nav-link fw-semibold px-2" aria-current="page" href="/shop">Shop</a>
+                <Link className="nav-link fw-semibold px-2" aria-current="page" href="/shop">Shop</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-semibold px-2" href="/about">About Us</a>
+                <Link className="nav-link fw-semibold px-2" href="/about">About Us</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-semibold px-2" href="/faq">FAQ</a>
+                <Link className="nav-link fw-semibold px-2" href="/faq">FAQ</Link>
               </li>
             </ul>
           </div>
         </div>
       </nav>
 
-      <Cart />
-      <Login />
+      <Cart cartItem={cartItem} setCartItem={setCartItem} />
+      <Login onSuccess={onSuccess} onFailure={onFailure} />
+      <UserProfile user={user} setUser={setUser} />
 
     </>
   )

@@ -3,11 +3,23 @@ import { Link } from 'react-router-dom'
 import Category from '../components/Category'
 import Sortsearch from '../components/Sortsearch'
 
-function Shop({products}) {
+function Shop({ products, cartItem, setCartItem }) {
     // Loop throuh product to get star
-    const addToCartFunc = (e, productID) => {
+    const addToCartFunc = (e, product) => {
         e.target.parentElement.classList.toggle('red')
-        // console.log(productID)
+        
+        if (e.target.parentElement.classList.contains('red')) {
+            setCartItem([...cartItem, product])
+        } else {
+            const index = cartItem.findIndex(cart => cart.id === product.id)
+            if (index !== -1) {
+                cartItem.splice(index, 1)
+            }
+            setCartItem(Array.from(cartItem))
+            // console.log(cartItem)
+        }
+        // console.log(product)
+        // console.log(like)
     }
 
     return (
@@ -31,7 +43,7 @@ function Shop({products}) {
                                 <div className="d-flex align-items-center justify-content-between">
                                     <p className='fw-bold m-0'>${product.price}</p>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="bi bi-heart-fill" fill={`hsl(0, 0%, 0%, 25%)`} viewBox="0 0 16 16">
-                                        <path fillRule="evenodd" onClick={(e) => addToCartFunc(e, product.id)} d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                        <path fillRule="evenodd" onClick={(e) => addToCartFunc(e, product)} d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                                     </svg>
                                 </div>
                             </div>

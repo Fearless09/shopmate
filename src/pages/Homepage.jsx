@@ -5,7 +5,7 @@ import TopProduct from '../components/TopProduct'
 import Category from '../components/Category'
 import About from '../components/About'
 
-function Homepage({products}) {
+function Homepage({products, cartItem, setCartItem}) {
 
   return (
     <React.Fragment>
@@ -16,7 +16,8 @@ function Homepage({products}) {
         <hr />
         <Sortsearch />
         <hr />
-        <TopProduct products={products} />        <About />
+        <TopProduct products={products} cartItem={cartItem} setCartItem={setCartItem} />
+        <About />
     </React.Fragment>
   )
 }
