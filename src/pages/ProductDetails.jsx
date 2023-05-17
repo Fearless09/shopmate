@@ -60,7 +60,7 @@ function ProductDetails({ products, cartItem, setCartItem }) {
                             <span className='ms-2'>(From {product.rating.count} Verified Rating)</span>
                         </p>
                         <p className="lead">Category: <span className=' ms-1 text-capitalize fw-normal'>{product.category}</span></p>
-                        <p className="lead mt-4">Price: <span className='ms-2 fw-normal'>${product.price}</span></p>
+                        <p className="lead mt-4">Price: <span className='ms-2 fw-bold'>${product.price}</span></p>
 
                         <button className={`btn ${btnBG} btn-lg w-100 mt-5 d-flex align-items-center justify-content-center`} onClick={(e) => addToCartFunc(e, product)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart-plus me-2" viewBox="0 0 16 16">
@@ -79,7 +79,7 @@ function ProductDetails({ products, cartItem, setCartItem }) {
                     <hr />
                     <h4 className='mt-4 mb-3'>{product.title}</h4>
                     <p className="lead">Category: <span className=' ms-1 text-capitalize fw-normal'>{product.category}</span></p>
-                    <p className="lead">Price: <span className='ms-2 fw-normal'>${product.price}</span></p>
+                    <p className="lead">Price: <span className='ms-2 fw-bold'>${product.price}</span></p>
                     <p className="lead">Rating:
                         <span className="fw-normal ms-2">{product.rating.rate} stars</span>    
                         <span className='ms-2'>(From {product.rating.count} Verified Rating)</span>
