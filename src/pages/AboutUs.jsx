@@ -4,7 +4,7 @@ function AboutUs() {
 
   return (
     <>
-      <div className={`container mt-5 avoidNav`}>
+      <div className={`container mt-5 pt-3 avoidNav`}>
           <h4 className='text-uppercase'>About Us</h4>
           <p className="lead mt-3">At Shopmate, we're passionate about making online shopping more convenient and accessible for everyone. Our mission is to create a seamless shopping experience that makes it easy for customers to find the products they need and get them delivered straight to their doorsteps.</p>
 

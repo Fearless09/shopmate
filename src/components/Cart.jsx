@@ -18,7 +18,7 @@ function Cart({ cartItem, setCartItem }) {
     let totalPrice = cartItem.reduce((sum, item) => {
         return sum + item.price
     }, 0)
-    console.log(totalPrice)
+    // console.log(totalPrice)
 
     let cartContent = cartItem.map((item, index) => {
         return (

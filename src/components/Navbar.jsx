@@ -71,7 +71,7 @@ function Navbar({ cartItem, setCartItem }) {
             </button>
 
             {/* User */}
-            {user === undefined ? (
+            {/* {user === undefined ? (
               <button data-bs-toggle="modal" data-bs-target="#loginModal" className='btn btn-sm fs-6 text-muted ms-2'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
@@ -84,7 +84,7 @@ function Navbar({ cartItem, setCartItem }) {
                 
               </button>
             )}
-            
+             */}
           </div>
           
 
@@ -96,13 +96,13 @@ function Navbar({ cartItem, setCartItem }) {
           <div className={`collapse navbar-collapse`} id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-md-0 flex-row justify-content-center">
               <li className="nav-item">
-                <Link className="nav-link fw-semibold px-2" aria-current="page" href="/shop">Shop</Link>
+                <Link className="nav-link fw-semibold px-2" aria-current="page" to="/shop">Shop</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link fw-semibold px-2" href="/about">About Us</Link>
+                <Link className="nav-link fw-semibold px-2" to="/about">About Us</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link fw-semibold px-2" href="/faq">FAQ</Link>
+                <Link className="nav-link fw-semibold px-2" to="/faq">FAQ</Link>
               </li>
             </ul>
           </div>

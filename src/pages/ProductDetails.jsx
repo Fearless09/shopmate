@@ -17,6 +17,20 @@ function ProductDetails({ products, cartItem, setCartItem }) {
         return undefined
     }
 
+    // Return Stars
+    const stars = (product) => {
+        let star =[]
+        for (let i = 0; i < Math.round(product.rating.rate); i++) {
+            star.push(
+                <svg key={i} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="hsl(30, 100%, 60%)" className="bi bi-star-fill mx-1" viewBox="0 0 16 16">
+                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+            )
+            
+        }
+        return star
+    }
+
     // Return Products of the same category
     const sameCategory = products.filter(sameProduct => sameProduct.category === product.category)
     if (sameCategory === undefined) {
@@ -49,15 +63,16 @@ function ProductDetails({ products, cartItem, setCartItem }) {
     return (
         <>
             <div className='avoidNav container p-2'>
-                <div className="row gutter-3">
+                <div className="row">
                     <div className="col-4">
                         <img src={product.image} alt="" className='img img-fluid w-100' />
                     </div>
                     <div className="col-8">
                         <h4 className='mt-1 mb-4'>{product.title}</h4>
+                        
                         <p className='lead'>
-                            <span className="fw-normal">{product.rating.rate} stars</span>    
-                            <span className='ms-2'>(From {product.rating.count} Verified Rating)</span>
+                            <span className="fw-normal">{stars(product)}</span>    
+                            <span className='d-block mt-1'>{product.rating.count} Verified Rating</span>
                         </p>
                         <p className="lead">Category: <span className=' ms-1 text-capitalize fw-normal'>{product.category}</span></p>
                         <p className="lead mt-4">Price: <span className='ms-2 fw-bold'>${product.price}</span></p>
@@ -81,7 +96,7 @@ function ProductDetails({ products, cartItem, setCartItem }) {
                     <p className="lead">Category: <span className=' ms-1 text-capitalize fw-normal'>{product.category}</span></p>
                     <p className="lead">Price: <span className='ms-2 fw-bold'>${product.price}</span></p>
                     <p className="lead">Rating:
-                        <span className="fw-normal ms-2">{product.rating.rate} stars</span>    
+                        <span className="fw-normal ms-2">{stars(product)}</span>    
                         <span className='ms-2'>(From {product.rating.count} Verified Rating)</span>
                     </p>
                     <p className="lead">Description:

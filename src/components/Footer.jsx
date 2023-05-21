@@ -24,12 +24,12 @@ function Footer() {
                 {/* Policy and ToS */}
                 <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-lg-0">
                     <p className="lead fw-semibold">Privacy Policy and ToS</p>
-                    <p className="lead">To read our privacy policy and terms of service ToA, <Link to="/ToS" className='btn px-0 text-decoration-underline'>click here</Link></p>
+                    <p className="lead">To read our privacy policy and terms of service ToA, <Link to="/ToS" className='text-muted'>click here</Link></p>
                 </div>
                 {/* FAQ */}
                 <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-lg-0">
                     <p className="lead fw-semibold">FAQ</p>
-                    <p className="lead">To read our frequently asked question, <Link to="/faq" className='btn px-0 text-decoration-underline'>click here</Link></p>
+                    <p className="lead">To read our frequently asked question, <Link to="/faq" className='text-muted'>click here</Link></p>
                 </div>
             </div>
             <p className="lead fw-semibold text-center mt-4">
