@@ -14,7 +14,7 @@ function TopProduct({products, cartItem, setCartItem}) {
                 cartItem.splice(index, 1)
                 setCartItem(Array.from(cartItem))
             }
-            // console.log("In Cart")
+            // consgit commit -ole.log("In Cart")
         } else {
             setCartItem([...cartItem, product])
             // console.log('Not in Cart')
