@@ -6,30 +6,28 @@ function TopProduct({products, cartItem, setCartItem}) {
     const [endIndex, setEndIndex] = useState(8)
     const [disableSeeMore, setDisableSeeMore] = useState(false)
 
-    const addToCartFunc = (e, product) => {
-        e.target.parentElement.classList.toggle('red')
-        
-        if (e.target.parentElement.classList.contains('red')) {
-            setCartItem([...cartItem, product])
-        } else {
+    const addToCartFunc = (product) => {
+
+        if (cartItem.includes(product)) {
             const index = cartItem.findIndex(cart => cart.id === product.id)
             if (index !== -1) {
                 cartItem.splice(index, 1)
                 setCartItem(Array.from(cartItem))
             }
-            // console.log(cartItem)
+            // console.log("In Cart")
+        } else {
+            setCartItem([...cartItem, product])
+            // console.log('Not in Cart')
         }
-        // console.log(product)
-        // console.log(like)
     }
 
-    products.sort((a,b) => {
+    const ratedProduct = products.sort((a,b) => {
         return b.rating.rate - a.rating.rate
     })
 
     const productLength = products.length
 
-    let topProducts = products.slice(0, endIndex)
+    let topProducts = ratedProduct.slice(0, endIndex)
 
     // console.log(topProducts)
 
@@ -61,8 +59,9 @@ function TopProduct({products, cartItem, setCartItem}) {
                             <p className="lead mb-1">{product.title}</p>
                             <div className="d-flex align-items-center justify-content-between">
                                 <p className='fw-bold m-0'>${product.price}</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="bi bi-heart-fill" fill={`hsl(0, 0%, 0%, 25%)`} viewBox="0 0 16 16">
-                                    <path fillRule="evenodd" onClick={(e) => addToCartFunc(e, product)} d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="bi bi-heart-fill" fill={cartItem.includes(product) ? 'red' : 'hsl(0, 0%, 0%, 25%)'} viewBox="0 0 16 16">
+
+                                    <path fillRule="evenodd" onClick={() => addToCartFunc(product)} d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                                 </svg>
                             </div>
                         </div>

@@ -48,10 +48,10 @@ function Carousel({products}) {
                 <SwiperSlide key={index} className='slide'>
                         <img src={product.image} className='img img-fluid w-100 position-absolute top-0 left-0 z-n1' id='carousel-img' alt="" />
                         <div className="container d-flex align-items-center h-100">
-                            <div className="w-50 ms-5 ps-3" id='carousel-product'>
+                            <div className="w-75 ms-5 ps-3" id='carousel-product'>
                                 <h1>{product.title}</h1>
 
-                                <Link to={`/product-detail/${product.id}`} className="btn btn-lg text-light fs-4 px-0 py-1" id='view-product'>
+                                <Link to={`/product-detail/${product.id}`} className="btn btn-lg text-light fs-4 px-0 mt-2" id='view-product'>
                                     view product
                                     <span className="d-block mt-1" id='product-line'></span>
                                 </Link>
