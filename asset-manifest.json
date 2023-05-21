@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/shopmate/static/css/main.9e9a4b8d.css",
-    "main.js": "/shopmate/static/js/main.13cff786.js",
+    "main.js": "/shopmate/static/js/main.5b72cb5f.js",
     "index.html": "/shopmate/index.html",
     "main.9e9a4b8d.css.map": "/shopmate/static/css/main.9e9a4b8d.css.map",
-    "main.13cff786.js.map": "/shopmate/static/js/main.13cff786.js.map"
+    "main.5b72cb5f.js.map": "/shopmate/static/js/main.5b72cb5f.js.map"
   },
   "entrypoints": [
     "static/css/main.9e9a4b8d.css",
-    "static/js/main.13cff786.js"
+    "static/js/main.5b72cb5f.js"
   ]
 }
