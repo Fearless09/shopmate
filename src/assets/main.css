@@ -151,3 +151,7 @@ span.badge {
 #category-thumbnail {
   height: 75px;
 }
+
+#dropdown-toggle-2::after {
+  display: none;
+}

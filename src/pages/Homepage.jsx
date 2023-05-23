@@ -22,9 +22,9 @@ function Homepage({products, cartItem, setCartItem}) {
       <div className="avoidNav"></div>
         {/* Carousel */}
         <Carousel products={products} />
-        <Category products={products} />
+        <Category products={products} cat={cat} setCat={setCat} />
         <hr />
-        <Sortsearch cat={cat} setCat={setCat} />
+        <Sortsearch products={products} cat={cat} setCat={setCat} />
         <hr />
         <TopProduct products={products} cartItem={cartItem} setCartItem={setCartItem} />
         <About />

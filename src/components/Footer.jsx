@@ -14,7 +14,7 @@ function Footer() {
                 <div className="col-sm-6 col-lg-3 px-3">
                     <p className="lead fw-semibold">Contact Us</p>
                     <span className="lead">Email: <a href='mailto:support@shopmate.com' className='text-secondary'>support@shopmate.com</a></span>
-                    <p className="lead my-2 d-flex"><strong>Phone:</strong><span className='ms-2'>+234-701-234-5678</span></p>
+                    <p className="lead my-2 d-flex align-items-center"><strong>Phone:</strong><span className='fs-6 ms-2'>+234-701-234-5678</span></p>
                 </div>
                 {/* Payment and Shipping */}
                 <div className="col-sm-6 col-lg-3 px-3 mt-4 mt-sm-0">

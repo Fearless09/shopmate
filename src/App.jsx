@@ -3,7 +3,7 @@ import './App.css';
 import Db from './db.json'
 // import { getProducts } from './ProductAPI';
 import Homepage from './pages/Homepage';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, json } from 'react-router-dom';
 import ScrollToTop from './ScollToTop';
 import Shop from './pages/Shop';
 import Filtered from './pages/Filtered';
@@ -26,11 +26,23 @@ function App() {
     if (storedData) {
       setCartItem(JSON.parse(storedData))
     }
-
-    // console.log(cartItem)
   }, [])
 
-  
+  // Store cart Item into Local Storage
+  useEffect(() => {
+    // localStorage.setItem('CartItem', JSON.stringify(cartItem))
+    
+    const handleUnload = () => {
+      localStorage.setItem('CartItem', JSON.stringify(cartItem))
+    }
+    
+    window.addEventListener('beforeunload', handleUnload)
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload)
+    }
+
+  }, [cartItem])
   
   
   // const [products, setProducts] = useState([]);
@@ -46,18 +58,83 @@ function App() {
   return (
     <>     
       <Router>
-          <Navbar cartItem={cartItem} setCartItem={setCartItem} />
-          <ScrollToTop />
-          <Routes>
-            <Route index element={<Homepage products={products} cartItem={cartItem} setCartItem={setCartItem} />} />
-            <Route path='/shop' element={<Shop products={products} cartItem={cartItem} setCartItem={setCartItem} />} />
-            <Route path='/category/:category' element={<Filtered products={products} cartItem={cartItem} setCartItem={setCartItem} />} />
-            <Route path='/about' element={<AboutUs />} />
-            <Route path='/faq' element={<FAQ />} />
-            <Route path='/product-detail/:id' element={<ProductDetails products={products} cartItem={cartItem} setCartItem={setCartItem} />} />
-            <Route path='/ToS' element={<PolicynToS />} />
-          </Routes>
-          <Footer />
+        <Navbar
+          cartItem={cartItem}
+          setCartItem={setCartItem}
+        />
+
+        <ScrollToTop />
+
+        <Routes>
+          <Route
+            index
+            element={
+              <Homepage
+                products={products}
+                cartItem={cartItem}
+                setCartItem={setCartItem}
+              />
+            }
+          />
+
+          <Route
+            path='/shop'
+            element={
+              <Shop
+                products={products}
+                cartItem={cartItem}
+                setCartItem={setCartItem}
+              />
+            }
+          />
+
+          <Route
+            path='/category/:category'
+            element={
+              <Filtered
+                products={products}
+                cartItem={cartItem}
+                setCartItem={setCartItem}
+              />
+            }
+          />
+
+          <Route
+            path='/about'
+            element={
+              <AboutUs />
+            }
+          />
+
+          <Route
+            path='/faq'
+            element={
+              <FAQ />
+            }
+          />
+
+          <Route
+            path='/product-detail/:id'
+            element={
+              <ProductDetails
+                products={products}
+                cartItem={cartItem}
+                setCartItem={setCartItem}
+              />
+            }
+          />
+
+          <Route
+            path='/ToS'
+            element={
+              <PolicynToS />
+            }
+          />
+
+        </Routes>
+
+        <Footer />
+
       </Router>
     </>
   );

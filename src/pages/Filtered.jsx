@@ -26,9 +26,9 @@ function Filtered({ products, cartItem, setCartItem }) {
 
     return (
         <div className='avoidNav'>
-            <Category products={products} />
+            <Category products={products} cat={cat} setCat={setCat} />
             <hr />
-            <Sortsearch cat={cat} setCat={setCat} />
+            <Sortsearch products={products} cat={cat} setCat={setCat} />
             <hr />
             <div className='container'>
                 <FilteredProduct sameCategory={sameCategory} cartItem={cartItem} setCartItem={setCartItem} />
