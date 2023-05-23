@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Category from '../components/Category'
 import Sortsearch from '../components/Sortsearch'
 
 function Shop({ products, cartItem, setCartItem }) {
+
+    const [cat, setCat] = useState('Shop')
 
     const addToCartFunc = (product) => {
         if (cartItem.includes(product)) {
@@ -22,22 +24,27 @@ function Shop({ products, cartItem, setCartItem }) {
         return a.id -b.id
     })
 
+    useEffect(() => {
+        if (cat == 'All') {
+        setCat('Shop')
+        }
+    }, [cat])
+
 
     return (
-        <>
-            <div className='container mt-2 avoidNav'>
-                
-                <Category products={products} />
-                <hr />
-                <Sortsearch />
-                <hr />
+        <div className='avoidNav'>
+            <Category products={products} />
+            <hr />
+            <Sortsearch cat={cat} setCat={setCat} />
+            <hr />
+            <div className='container'>
                 <div className='row'>
                     {shopProduct.map(product => {
                         return (
                             <div key={product.id} className='col-sm-6 col-md-4 col-xxl-3 p-4 p-xl-5' id='product'>
                                 <div className='p-4'>
                                     <Link to={`/product-detail/${product.id}`}>
-                                        <img src={product.image} className='img card-img' id='product-image' alt="product" />
+                                        <img src={product.image} className='img card-img' id='product-image' alt={product.title} />
                                     </Link>
                                 </div>
                                 <p className="lead mb-1">{product.title}</p>
@@ -52,7 +59,7 @@ function Shop({ products, cartItem, setCartItem }) {
                     })}
                 </div>    
             </div>
-        </>
+        </div>
     )
 }
 

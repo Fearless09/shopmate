@@ -14,7 +14,7 @@ function TopProduct({products, cartItem, setCartItem}) {
                 cartItem.splice(index, 1)
                 setCartItem(Array.from(cartItem))
             }
-            // consgit commit -ole.log("In Cart")
+            // console.log("In Cart")
         } else {
             setCartItem([...cartItem, product])
             // console.log('Not in Cart')
@@ -53,7 +53,7 @@ function TopProduct({products, cartItem, setCartItem}) {
                         <div key={product.id} className='col-sm-6 col-md-4 col-xxl-3 p-4 p-xl-5' id='product'>
                             <div className='p-4'>
                                 <Link to={`/product-detail/${product.id}`}>
-                                    <img src={product.image} className='img card-img' id='product-image' alt="product"/>
+                                    <img src={product.image} className='img card-img' id='product-image' alt={product.title}/>
                                 </Link>
                             </div>
                             <p className="lead mb-1">{product.title}</p>

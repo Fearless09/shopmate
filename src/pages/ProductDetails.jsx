@@ -74,7 +74,7 @@ function ProductDetails({ products, cartItem, setCartItem }) {
             <div className='avoidNav container p-2'>
                 <div className="row">
                     <div className="col-4">
-                        <img src={product.image} alt="" className='img img-fluid w-100' />
+                        <img src={product.image} alt={product.title} className='img img-fluid w-100' />
                     </div>
                     <div className="col-8">
                         <h4 className='mt-1 mb-4'>{product.title}</h4>
@@ -113,7 +113,7 @@ function ProductDetails({ products, cartItem, setCartItem }) {
                     </p>
 
                     <div className='mt-5 text-center'>
-                        <img src={product.image} className='img img-fluid' alt="" />
+                        <img src={product.image} className='img img-fluid' alt={product.title} />
                     </div>
 
                 </div>
@@ -126,7 +126,7 @@ function ProductDetails({ products, cartItem, setCartItem }) {
                                 <div key={product.id} className='col-sm-6 col-md-4 col-xxl-3 p-2 thubnailCon'>
                                     <div className='px-5 py-2'>
                                         <Link to={`/product-detail/${product.id}`}>
-                                            <img src={product.image} className='img card-img thubnail' id='product-image' alt="product" />
+                                            <img src={product.image} className='img card-img thubnail' id='product-image' alt={product.title} />
                                         </Link>
                                     </div>
                                     <p className="lead fs-6 mb-1 text-truncate">{product.title}</p>

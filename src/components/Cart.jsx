@@ -24,7 +24,7 @@ function Cart({ cartItem, setCartItem }) {
         return (
             <div className='row align-items-center my-2' key={index}>
                 <div className="col-3">
-                    <img src={item.image} className='img img-fluid w-100' alt="" />
+                    <img src={item.image} className='img img-fluid w-100' alt={cartItem.title} />
                 </div>
                 <div className="col-9 px-3">
                     <h6 className='mb-2'>{item.title}</h6>
