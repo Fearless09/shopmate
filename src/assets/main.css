@@ -127,15 +127,27 @@ span.badge {
 }
 
 #thubnailRow {
-  height: 220px;
-  overflow: hidden;
+  display: flex;
+  width: 130%;
+  min-width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 15s linear infinite;
+
+  /* animation-play-state: paused; */
 }
 
-.thubnailCon {
-  width: 220px;
-  /* width: 100%; */
-  height: 220px;
-  /* height: 100%; */
+#thubnailRow:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(50px);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .bi-heart-fill {
@@ -152,6 +164,6 @@ span.badge {
   height: 75px;
 }
 
-#dropdown-toggle-2::after {
-  display: none;
+.bi-chat-dots:hover {
+  fill: hsla(216, 98%, 52%, 65%);
 }

@@ -120,20 +120,22 @@ function ProductDetails({ products, cartItem, setCartItem }) {
 
                 <div className="mt-5">
                     <h3>You may also like</h3>
-                    <div className='row' id='thubnailRow'>
-                        {sameCategory.map(product => {
-                            return (
-                                <div key={product.id} className='col-sm-6 col-md-4 col-xxl-3 p-2 thubnailCon'>
-                                    <div className='px-5 py-2'>
-                                        <Link to={`/product-detail/${product.id}`}>
-                                            <img src={product.image} className='img card-img thubnail' id='product-image' alt={product.title} />
-                                        </Link>
+                    <div className='w-100 position-relative overflow-x-hidden'>
+                        <div className='justify-content-between positon-absolute' id='thubnailRow'>
+                            {sameCategory.map(product => {
+                                return (
+                                    <div key={product.id} className='p-2 mx-2 border rounded' style={{width: '220px'}}>
+                                        <div className='px-5 py-2 w-100'>
+                                            <Link to={`/product-detail/${product.id}`}>
+                                                <img src={product.image} className='img card-img thubnail' id='product-image' alt={product.title} />
+                                            </Link>
+                                        </div>
+                                        <p className="lead fs-6 mb-1 text-truncate">{product.title}</p>
+                                        <p className='fw-bold m-0'>${product.price}</p>
                                     </div>
-                                    <p className="lead fs-6 mb-1 text-truncate">{product.title}</p>
-                                    <p className='fw-bold m-0'>${product.price}</p>
-                                </div>
-                            )
-                        })}
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

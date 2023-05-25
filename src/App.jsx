@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import Db from './db.json'
 // import { getProducts } from './ProductAPI';
 import Homepage from './pages/Homepage';
@@ -13,10 +12,13 @@ import ProductDetails from './pages/ProductDetails';
 import PolicynToS from './pages/PolicynToS';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ContactBTN from './components/ContactBTN';
 
 function App() {
   
-  let products = Db
+  // let products = Db
+
+  const [products, ] = useState(Db)
   
   const [cartItem, setCartItem] = useState([])
 
@@ -132,6 +134,8 @@ function App() {
           />
 
         </Routes>
+
+        <ContactBTN />
 
         <Footer />
 
