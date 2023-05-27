@@ -26,7 +26,6 @@ function Carousel({products}) {
 
   return (
     <React.Fragment>
-        {/* <Link to='/shop'>Link</Link> */}
         <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -43,8 +42,7 @@ function Carousel({products}) {
             className='mySwiper mx-auto'
         >
             {/* Carousel Item */}
-            {showCase.map((product, index) => {
-            return (
+            {showCase.map((product, index) => (
                 <SwiperSlide key={index} className='slide'>
                         <img src={product.image} className='img img-fluid w-100 position-absolute top-0 left-0 z-n1' id='carousel-img' alt={product.title} />
                         <div className="container d-flex align-items-center h-100">
@@ -59,10 +57,8 @@ function Carousel({products}) {
                             </div>
                             
                         </div>
-                </SwiperSlide>
-                        
-            )
-        })}
+                </SwiperSlide>        
+            ))}
 
         </Swiper>            
     </React.Fragment>

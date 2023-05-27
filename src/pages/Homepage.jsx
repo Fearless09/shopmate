@@ -12,8 +12,6 @@ function Homepage({products, cartItem, setCartItem}) {
   useEffect(() => {
     if (cat === 'All') {
       setCat('Home')
-    } else if (cat === 'Electronics') {
-      const sameCategory = products.filter(sameProduct => sameProduct.category === 'elctronics')
     }
   }, [cat])
 

@@ -3,25 +3,31 @@ import { useEffect } from 'react'
 
 function Cart({ cartItem, setCartItem }) {
 
-    // useEffect(() => {
-    //     console.log(cartItem)
-    // })
-
     const delCart = (product) => {
-        const index = cartItem.findIndex(cart => cart.id === product.id)
-        if (index !== -1) {
-            cartItem.splice(index, 1)
-        }
-        setCartItem(Array.from(cartItem))
+        setCartItem(cartItem.filter(cart => cart.id !== product.id))
     }
 
     let totalPrice = cartItem.reduce((sum, item) => {
         return sum + item.price
     }, 0)
-    // console.log(totalPrice)
 
-    let cartContent = cartItem.map((item, index) => {
-        return (
+    const checkout = async () => {
+        await fetch('http://localhost:4000/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({items: cartItem})
+        }).then(response => response.json())
+        .then(response => {
+            if (response.url) {
+                window.location.assign(response.url)
+                // console.log(response)
+            }
+        })
+    }
+
+    let cartContent = cartItem.map((item, index) => (
             <div className='row align-items-center my-2' key={index}>
                 <div className="col-3">
                     <img src={item.image} className='img img-fluid w-100' alt={cartItem.title} />
@@ -40,8 +46,7 @@ function Cart({ cartItem, setCartItem }) {
                     </div>
                 </div>
             </div>
-        )
-    })
+    ))
     
     return (
         <div className="modal fade" id="cartModal" tabIndex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
@@ -53,11 +58,11 @@ function Cart({ cartItem, setCartItem }) {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    {cartItem.length == 0 ? (
+                    {cartItem.length == 0 ?
                         <div className='px-2 py-5 text-center'>
                             You've no item in your cart
                         </div>
-                    ): (
+                    :
                         <>
                             <div className="modal-body">                        
                                 {cartContent}
@@ -69,12 +74,12 @@ function Cart({ cartItem, setCartItem }) {
                             </div>
 
                             <div className="modal-footer pt-0">
-                                <button type="button" className="btn btn-primary w-100">
+                                <button type="button" className="btn btn-primary w-100 fw-bold text-uppercase" onClick={checkout}>
                                     Check Out
                                 </button>
                             </div>
                         </>
-                    )}
+                    }
 
                     
                 </div>

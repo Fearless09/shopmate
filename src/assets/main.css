@@ -132,7 +132,7 @@ span.badge {
   min-width: max-content;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 15s linear infinite;
+  animation: marquee 10s linear infinite;
 
   /* animation-play-state: paused; */
 }

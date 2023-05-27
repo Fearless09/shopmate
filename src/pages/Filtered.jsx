@@ -11,7 +11,6 @@ function Filtered({ products, cartItem, setCartItem }) {
 
     const [cat, setCat] = useState(productCategory)
 
-
     // Return Products of the same category
     let sameCategory = products.filter(sameProduct => sameProduct.category === productCategory)
 

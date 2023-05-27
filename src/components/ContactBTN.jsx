@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Configuration, OpenAIApi } from 'openai'
 
 function ContactBTN() {
     const [display, setDisplay] = useState(false)
@@ -9,8 +10,28 @@ function ContactBTN() {
     let chatDisplay = display ? 'd-block' : 'd-none'
 
     const api = process.env.REACT_APP_API_KEY
+    
+    // const configuration = new Configuration({
+    //     apiKey: process.env.REACT_APP_API_KEY
+    // })
 
-    console.log(process.env.REACT_APP_API_KEY)
+    // const openai = new OpenAIApi(configuration)
+
+    // useEffect(() => {
+    //     const fetchCompletion = async () => {
+    //         const completion = await openai.createCompletion({
+    //             model: 'gpt-3.5-turbo',
+    //             messages: [{ role: 'system', content: 'You are a helpful assistant.' }],
+    //         });
+    //         // console.log(completion.data.choices[0].text);
+    
+    //         console.log(completion)
+    //     }
+
+    //     fetchCompletion()
+    // }, [])
+
+    // console.log(process.env.REACT_APP_API_KEY)
     const handleRequest = () => {
         if (input === '') {
 

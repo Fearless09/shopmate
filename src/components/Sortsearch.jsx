@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import SearchResult from './SearchResult'
 
 function Sortsearch({ products, cat, setCat}) {
-  const [searchTerm, setSearchTerm] = useState('10000')
+  const [searchTerm, setSearchTerm] = useState('1000')
   const [searchResult, setSearchResult] = useState([])
 
   useEffect(() => {
@@ -71,21 +72,10 @@ function Sortsearch({ products, cat, setCat}) {
 
           {/* Searched Lists */}
           <ul className="w-100 dropdown-menu overflow-y-auto overflow-x-hidden" style={{maxHeight: '310px'}}>
-            {searchResult.length === 0 ? (
+            {searchResult.length === 0 ?
               <p className='lead text-center'>No Product found</p>
-            ) : ''}
-            {searchResult.map(result => {
-              return (
-                <li key={result.id}><Link to={`/product-detail/${result.id}`} className="dropdown-item px-2" href="#">
-                  <p className='text-truncate mb-1'>{result.title}</p>
-                  <div className="hstack justify-content-between">
-                    <p className='text-capitalize'>{result.category}</p>
-                    <p className='fw-semibold'>${result.price}</p>
-                  </div>
-                  
-                </Link></li>
-              )
-            })}
+            : <SearchResult products={searchResult} /> 
+            }
           </ul>
         </div>
 
