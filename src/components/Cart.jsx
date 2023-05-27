@@ -58,7 +58,7 @@ function Cart({ cartItem, setCartItem }) {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    {cartItem.length == 0 ?
+                    {cartItem.length === 0 ?
                         <div className='px-2 py-5 text-center'>
                             You've no item in your cart
                         </div>

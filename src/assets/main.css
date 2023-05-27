@@ -150,6 +150,21 @@ span.badge {
   }
 }
 
+.success {
+  margin-top: -20px;
+  background-size: cover;
+  animation: confetti 2s ease-in-out;
+}
+
+@keyframes confetti {
+  from {
+    background: url('./images/confetti2.gif');
+  }
+  to {
+    background: url('./images/confetti2.gif');
+  }
+}
+
 .bi-heart-fill {
   cursor: pointer;
 }

@@ -13,6 +13,8 @@ import PolicynToS from './pages/PolicynToS';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ContactBTN from './components/ContactBTN';
+import Success from './pages/Success';
+import Cancel from './pages/Cancel';
 
 function App() {
   
@@ -123,6 +125,20 @@ function App() {
                 cartItem={cartItem}
                 setCartItem={setCartItem}
               />
+            }
+          />
+
+          <Route
+            path='/success'
+            element={
+              <Success cartItem={cartItem} setCartItem={setCartItem} />
+            }
+          />
+
+          <Route
+            path='/cancel'
+            element={
+              <Cancel cartItem={cartItem} setCartItem={setCartItem} />
             }
           />
 
