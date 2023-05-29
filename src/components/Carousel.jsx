@@ -11,7 +11,7 @@ import 'swiper/css/navigation'
 import { Autoplay, Pagination, Navigation } from 'swiper'
 import { Link } from 'react-router-dom'
 
-function Carousel({products}) {
+function Carousel({ products }) {
 
     const showCase = []
     const slide = 3
@@ -31,7 +31,7 @@ function Carousel({products}) {
             centeredSlides={true}
             loop={true}
             autoplay={{
-                delay: 3000,
+                delay: 4000,
                 disableOnInteraction: false
             }}
             pagination={{

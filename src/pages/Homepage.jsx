@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import products from '../products.json'
 import Carousel from '../components/Carousel'
 import Sortsearch from '../components/Sortsearch'
 import TopProduct from '../components/TopProduct'
 import Category from '../components/Category'
 import About from '../components/About'
 
-function Homepage({products, cartItem, setCartItem}) {
+function Homepage({cartItem, setCartItem}) {
 
   const [cat, setCat] = useState('Home')
 

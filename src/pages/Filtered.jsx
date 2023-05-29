@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import FilteredProduct from '../components/FilteredProduct'
+import products from '../products.json'
 import Category from '../components/Category'
 import Sortsearch from '../components/Sortsearch'
 import About from '../components/About'
+import Product from '../components/Product'
 
-function Filtered({ products, cartItem, setCartItem }) {
+function Filtered({ cartItem, setCartItem }) {
 
     let productCategory = useParams().category
 
@@ -13,10 +14,6 @@ function Filtered({ products, cartItem, setCartItem }) {
 
     // Return Products of the same category
     let sameCategory = products.filter(sameProduct => sameProduct.category === productCategory)
-
-    sameCategory = sameCategory.sort((a,b) => {
-        return a.id - b.id
-    })
 
     if (sameCategory === undefined) {
         console.log('Product not found')
@@ -30,7 +27,9 @@ function Filtered({ products, cartItem, setCartItem }) {
             <Sortsearch products={products} cat={cat} setCat={setCat} />
             <hr />
             <div className='container'>
-                <FilteredProduct sameCategory={sameCategory} cartItem={cartItem} setCartItem={setCartItem} />
+                <div className="row">
+                    <Product products={sameCategory} cartItem={cartItem} setCartItem={setCartItem} />
+                </div>
                 <About />
             </div>
         </div>

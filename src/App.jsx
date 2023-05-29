@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Db from './db.json'
-// import { getProducts } from './ProductAPI';
 import Homepage from './pages/Homepage';
 import { HashRouter as Router, Routes, Route, json } from 'react-router-dom';
 import ScrollToTop from './ScollToTop';
@@ -17,10 +15,6 @@ import Success from './pages/Success';
 import Cancel from './pages/Cancel';
 
 function App() {
-  
-  // let products = Db
-
-  const [products, ] = useState(Db)
   
   const [cartItem, setCartItem] = useState([])
 
@@ -74,7 +68,6 @@ function App() {
             index
             element={
               <Homepage
-                products={products}
                 cartItem={cartItem}
                 setCartItem={setCartItem}
               />
@@ -85,7 +78,6 @@ function App() {
             path='/shop'
             element={
               <Shop
-                products={products}
                 cartItem={cartItem}
                 setCartItem={setCartItem}
               />
@@ -96,7 +88,6 @@ function App() {
             path='/category/:category'
             element={
               <Filtered
-                products={products}
                 cartItem={cartItem}
                 setCartItem={setCartItem}
               />
@@ -121,7 +112,6 @@ function App() {
             path='/product-detail/:id'
             element={
               <ProductDetails
-                products={products}
                 cartItem={cartItem}
                 setCartItem={setCartItem}
               />
@@ -151,7 +141,7 @@ function App() {
 
         </Routes>
 
-        <ContactBTN />
+        {/* <ContactBTN /> */}
 
         <Footer />
 

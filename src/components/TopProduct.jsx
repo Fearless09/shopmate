@@ -6,7 +6,7 @@ function TopProduct({products, cartItem, setCartItem}) {
     const [endIndex, setEndIndex] = useState(8)
     const [disableSeeMore, setDisableSeeMore] = useState(false)
 
-    const ratedProduct = products.sort((a,b) => {
+    const ratedProduct = [...products].sort((a,b) => {
         return b.rating.rate - a.rating.rate
     })
 
@@ -26,7 +26,7 @@ function TopProduct({products, cartItem, setCartItem}) {
             setEndIndex(productLength)
             setDisableSeeMore(!disableSeeMore)
         }
-    }, [endIndex])
+    }, [endIndex, productLength])
     
     return (
         <div className='container mt-3'>

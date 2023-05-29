@@ -1,21 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 function Success({ cartItem, setCartItem }) {
-    // const [ordered, setOrdered] = useState([])
-
-    useEffect(() => {
-        // setOrdered(cartItem)
-        // setCartItem([])
-
-        // console.log(ordered)
-    }, [])
 
     let orderDate = new Date()
 
-    const randomNo = (num) => {
-        return Math.floor(Math.random() * num)
-    }
-    
     function generateOrderId() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const numbers = '0123456789';

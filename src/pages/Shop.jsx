@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import products from '../products.json'
 import Category from '../components/Category'
 import Sortsearch from '../components/Sortsearch'
 import Product from '../components/Product'
 
-function Shop({ products, cartItem, setCartItem }) {
+function Shop({ cartItem, setCartItem }) {
 
     const [cat, setCat] = useState('Shop')
-
-    const shopProduct = products.sort((a,b) => {
-        return a.id -b.id
-    })
 
     useEffect(() => {
         if (cat === 'All') {
@@ -26,9 +23,9 @@ function Shop({ products, cartItem, setCartItem }) {
             <hr />
             <div className='container'>
                 <div className='row'>
-                    {shopProduct === undefined ? 
+                    {products === undefined ? 
                         <p className='lead text-center'>Loading products . . .</p>
-                    : <Product products={shopProduct} cartItem={cartItem} setCartItem={setCartItem} />
+                    : <Product products={products} cartItem={cartItem} setCartItem={setCartItem} />
                     }
                 </div>    
             </div>

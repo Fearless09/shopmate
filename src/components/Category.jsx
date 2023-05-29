@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import products from '../products.json'
 import { Link } from 'react-router-dom'
 
-function Category({ products, setCat }) {
+function Category({ setCat }) {
   
   products.sort((a,b) => {
     return a.id - b.id
