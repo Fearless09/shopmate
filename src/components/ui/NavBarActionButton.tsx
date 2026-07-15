@@ -38,7 +38,12 @@ export const CategoryAction = () => {
         className="max-h-60 w-55"
       >
         {categories.map(({ name, slug }) => (
-          <Link key={slug} className="block" href={`/product?category=${slug}`}>
+          <Link
+            key={slug}
+            className="block"
+            href={`/products?category=${slug}`}
+            onClick={() => toggleIsOpen(false)}
+          >
             <DropdownItem>{name}</DropdownItem>
           </Link>
         ))}
@@ -148,7 +153,10 @@ export const SearchAction = () => {
   const { products, loading } = useShop();
   const [isOpen, toggleIsOpen] = useToggle(false);
   const [value, setValue] = useState<string>("");
-  const ref = useClose(() => toggleIsOpen(false));
+  const ref = useClose(() => {
+    toggleIsOpen(false);
+    setValue("");
+  });
 
   const searchProducts = useMemo(() => {
     if (!value) return [];
@@ -157,7 +165,8 @@ export const SearchAction = () => {
     const findProduct = products.filter(
       (p) =>
         p.title.toLowerCase().includes(val) ||
-        p.description.toLowerCase().includes(val),
+        p.description.toLowerCase().includes(val) ||
+        p.category.toLowerCase().includes(val),
     );
 
     const transfromProduct: CartProduct[] = findProduct.map(
@@ -187,7 +196,7 @@ export const SearchAction = () => {
 
   return (
     <main ref={ref} className="relative">
-      <div
+      <form
         className={cn(
           "transition-300 flex overflow-hidden rounded-lg border border-transparent text-neutral-600 dark:text-neutral-400",
           {
@@ -195,6 +204,18 @@ export const SearchAction = () => {
               isOpen,
           },
         )}
+        onSubmit={(e) => {
+          e.preventDefault();
+          const val = value.trim();
+
+          if (val) {
+            router.push(`/products?search=${val}`);
+            setValue("");
+            toggleIsOpen(false);
+          } else {
+            toggleIsOpen();
+          }
+        }}
       >
         {isOpen && (
           <input
@@ -206,21 +227,13 @@ export const SearchAction = () => {
           />
         )}
         <button
+          type="submit"
           className="transition-300 flex size-9 cursor-pointer items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-900"
           aria-label="Search"
-          onClick={() => {
-            const val = value.trim();
-
-            if (val) {
-              router.push(`/products?search=${val}`);
-            } else {
-              toggleIsOpen();
-            }
-          }}
         >
           <Search className="size-5" />
         </button>
-      </div>
+      </form>
 
       <DropdownWrapper isOpen={isOpen} className="w-85">
         {loading ? (

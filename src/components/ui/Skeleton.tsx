@@ -65,3 +65,46 @@ export function CartItemSkeleton({ compType = "cart" }: CartItemSkeletonProps) {
     </div>
   );
 }
+
+export function ProductsPageSkeleton() {
+  return (
+    <div className="min-h-screen w-full bg-neutral-50 pb-20 dark:bg-neutral-950">
+      {/* Header Banner Skeleton */}
+      <div className="relative overflow-hidden bg-neutral-950 py-16 text-white">
+        <div className="wrapper relative z-10 space-y-4">
+          <div className="h-4 w-24 animate-pulse rounded bg-neutral-800" />
+          <div className="h-10 w-64 animate-pulse rounded bg-neutral-800" />
+          <div className="h-6 w-96 animate-pulse rounded bg-neutral-800" />
+        </div>
+      </div>
+
+      <div className="wrapper mt-10 grid grid-cols-1 gap-8 lg:grid-cols-4">
+        {/* Sidebar Skeleton */}
+        <div className="hidden animate-pulse space-y-6 lg:block">
+          <div className="h-6 w-32 rounded bg-neutral-200 dark:bg-neutral-800" />
+          <div className="space-y-3">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-9 w-full rounded-xl bg-neutral-200 dark:bg-neutral-800"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Catalog Skeleton */}
+        <div className="space-y-6 lg:col-span-3">
+          <div className="h-12 w-full animate-pulse rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <div
+                key={idx}
+                className="h-96 rounded-2xl bg-neutral-200 dark:bg-neutral-800"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

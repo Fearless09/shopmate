@@ -9,6 +9,7 @@ import { cn, filterProduct } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { ProductCardSkeleton } from "../ui/Skeleton";
+import { sortingOptions } from "@/data/sorting";
 
 export default function ProductSection() {
   const { products, categories, loading } = useShop();
@@ -97,7 +98,7 @@ export default function ProductSection() {
               className="cursor-pointer appearance-none bg-transparent py-2 pr-8.5 pl-7.5 text-sm font-medium text-neutral-600 focus:outline-none dark:text-neutral-400"
               style={{ backgroundImage: "none" }}
             >
-              {sorting.map(({ id, name }) => (
+              {sortingOptions.map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}
                 </option>
@@ -166,10 +167,3 @@ export default function ProductSection() {
     </section>
   );
 }
-
-const sorting = [
-  { id: "default", name: "Default Sorting" },
-  { id: "price-asc", name: "Price: Low to High" },
-  { id: "price-desc", name: "Price: High to Low" },
-  { id: "rating", name: "Top Rated" },
-];

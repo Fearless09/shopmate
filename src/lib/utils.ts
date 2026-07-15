@@ -30,11 +30,13 @@ export function filterProduct({
   products,
   search,
   sort,
+  limit,
 }: {
   products: Product[];
   search: string;
   category: string;
   sort: string;
+  limit?: number | null;
 }): Product[] {
   let result = [...products];
 
@@ -43,12 +45,15 @@ export function filterProduct({
     result = result.filter(
       (p) =>
         p.title.toLowerCase().includes(term) ||
-        p.description.toLowerCase().includes(term),
+        p.description.toLowerCase().includes(term) ||
+        p.category.toLowerCase().includes(term),
     );
   }
 
-  if (category !== "all") {
-    result = result.filter((p) => p.category === category);
+  if (category && category.toLowerCase() !== "all") {
+    result = result.filter(
+      (p) => p.category.toLowerCase() === category.toLowerCase(),
+    );
   }
 
   switch (sort) {
@@ -63,7 +68,10 @@ export function filterProduct({
       break;
   }
 
-  return result.slice(0, RESULT_LIMIT);
+  if (limit === null) {
+    return result;
+  }
+  return result.slice(0, limit ?? RESULT_LIMIT);
 }
 
 export function calcTotal({
