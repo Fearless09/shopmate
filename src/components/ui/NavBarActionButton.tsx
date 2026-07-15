@@ -1,0 +1,247 @@
+"use client";
+
+import { useShop } from "@/context/ShopContext";
+import { useClose } from "@/hooks/useClose";
+import { useToggle } from "@/hooks/useToggle";
+import { calcTotal, cn } from "@/lib/utils";
+import { ChevronDown, Frown, Heart, Search, ShoppingBag } from "lucide-react";
+import { CartDropdownItem, DropdownItem, DropdownWrapper } from "./Dropdown";
+import Link from "next/link";
+import { EmptyState } from "./EmptyState";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { CartItemSkeleton } from "./Skeleton";
+
+export const CategoryAction = () => {
+  const { categories } = useShop();
+  const [isOpen, toggleIsOpen] = useToggle(false);
+  const ref = useClose(() => toggleIsOpen(false));
+
+  if (categories.length === 0) return;
+
+  return (
+    <main ref={ref} className="relative">
+      <button
+        className="transition-300 flex cursor-pointer items-center gap-0.75 text-sm font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+        aria-label="Categories"
+        onClick={() => toggleIsOpen()}
+      >
+        Categories
+        <ChevronDown
+          className={cn("transition-300 size-4", { "rotate-180": isOpen })}
+        />
+      </button>
+
+      <DropdownWrapper
+        isOpen={isOpen}
+        xPosition="left"
+        className="max-h-60 w-55"
+      >
+        {categories.map(({ name, slug }) => (
+          <Link key={slug} className="block" href={`/product?category=${slug}`}>
+            <DropdownItem>{name}</DropdownItem>
+          </Link>
+        ))}
+      </DropdownWrapper>
+    </main>
+  );
+};
+
+export const CartAction = () => {
+  const router = useRouter();
+  const { cart, loading } = useShop();
+  const [isOpen, toggleIsOpen] = useToggle(false);
+  const ref = useClose(() => toggleIsOpen(false));
+
+  return (
+    <main ref={ref} className="relative">
+      <button
+        className="transition-300 relative flex size-9 cursor-pointer items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
+        aria-label="Cart"
+        onClick={() => toggleIsOpen()}
+      >
+        <ShoppingBag className="size-5" />
+        {cart && cart.totalProducts > 0 && (
+          <span className="absolute -top-1 -right-1 flex size-4.25 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white ring-2 ring-white dark:ring-neutral-950">
+            {cart.totalProducts}
+          </span>
+        )}
+      </button>
+
+      <DropdownWrapper isOpen={isOpen} className="w-85">
+        {loading ? (
+          Array.from({ length: 3 }).map((_, idx) => (
+            <CartItemSkeleton key={idx} compType="cart" />
+          ))
+        ) : cart && cart.product.length > 0 ? (
+          cart.product.map((cartProduct) => (
+            <CartDropdownItem
+              key={cartProduct.id}
+              {...cartProduct}
+              compType="cart"
+            />
+          ))
+        ) : (
+          <EmptyState
+            actionText="Browse products"
+            description="Items you add will show up here. Start browsing to find something you'll love."
+            icon={ShoppingBag}
+            onAction={() => router.push("/products")}
+            title="Your cart is empty"
+            classNmae="mt-0 border-0 py-7"
+          />
+        )}
+      </DropdownWrapper>
+    </main>
+  );
+};
+
+export const WishlishAction = () => {
+  const router = useRouter();
+
+  const { wishList, loading } = useShop();
+  const [isOpen, toggleIsOpen] = useToggle(false);
+  const ref = useClose(() => toggleIsOpen(false));
+
+  return (
+    <main ref={ref} className="relative">
+      <button
+        className="transition-300 relative flex size-9 cursor-pointer items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
+        aria-label="Wishlist"
+        onClick={() => toggleIsOpen()}
+      >
+        <Heart className="size-5" />
+        {wishList.length > 0 && (
+          <span className="absolute -top-1 -right-1 flex size-4.25 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white ring-2 ring-white dark:ring-neutral-950">
+            {wishList.length}
+          </span>
+        )}
+      </button>
+
+      <DropdownWrapper isOpen={isOpen} className="w-85">
+        {loading ? (
+          Array.from({ length: 3 }).map((_, idx) => (
+            <CartItemSkeleton key={idx} compType="wishlist" />
+          ))
+        ) : wishList.length > 0 ? (
+          wishList.map((item) => (
+            <CartDropdownItem key={item.id} {...item} compType="wishlist" />
+          ))
+        ) : (
+          <EmptyState
+            actionText="Browse products"
+            description="Your favorites items will show up here. Start browsing to find something you'll love."
+            icon={Heart}
+            onAction={() => router.push("/products")}
+            title="Your wishlist is empty"
+            classNmae="mt-0 border-0 py-7"
+          />
+        )}
+      </DropdownWrapper>
+    </main>
+  );
+};
+
+export const SearchAction = () => {
+  const router = useRouter();
+
+  const { products, loading } = useShop();
+  const [isOpen, toggleIsOpen] = useToggle(false);
+  const [value, setValue] = useState<string>("");
+  const ref = useClose(() => toggleIsOpen(false));
+
+  const searchProducts = useMemo(() => {
+    if (!value) return [];
+
+    const val = value.trim().toLowerCase();
+    const findProduct = products.filter(
+      (p) =>
+        p.title.toLowerCase().includes(val) ||
+        p.description.toLowerCase().includes(val),
+    );
+
+    const transfromProduct: CartProduct[] = findProduct.map(
+      ({ id, title, price, discountPercentage, thumbnail }) => {
+        const quantity = 1;
+        const { discountedTotal, total } = calcTotal({
+          discountPercentage,
+          price,
+          quantity,
+        });
+
+        return {
+          id,
+          title,
+          price,
+          discountPercentage,
+          thumbnail,
+          quantity,
+          discountedTotal,
+          total,
+        };
+      },
+    );
+
+    return transfromProduct;
+  }, [products, value]);
+
+  return (
+    <main ref={ref} className="relative">
+      <div
+        className={cn(
+          "transition-300 flex overflow-hidden rounded-lg border border-transparent text-neutral-600 dark:text-neutral-400",
+          {
+            "border-neutral-200 bg-neutral-100 shadow-sm dark:border-neutral-800 dark:bg-neutral-900":
+              isOpen,
+          },
+        )}
+      >
+        {isOpen && (
+          <input
+            id="nav-search"
+            type="search"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className="h-9 w-full max-w-80 grow px-3 outline-0"
+          />
+        )}
+        <button
+          className="transition-300 flex size-9 cursor-pointer items-center justify-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-900"
+          aria-label="Search"
+          onClick={() => {
+            const val = value.trim();
+
+            if (val) {
+              router.push(`/products?search=${val}`);
+            } else {
+              toggleIsOpen();
+            }
+          }}
+        >
+          <Search className="size-5" />
+        </button>
+      </div>
+
+      <DropdownWrapper isOpen={isOpen} className="w-85">
+        {loading ? (
+          Array.from({ length: 3 }).map((_, idx) => (
+            <CartItemSkeleton key={idx} compType="search" />
+          ))
+        ) : searchProducts.length > 0 ? (
+          searchProducts.map((item) => (
+            <CartDropdownItem key={item.id} {...item} compType="search" />
+          ))
+        ) : (
+          <EmptyState
+            actionText="Browser Products"
+            description="We couldn't find anything matching your filters or search query. Try modifying your keywords."
+            icon={Frown}
+            onAction={() => router.push("/products")}
+            title="No Products Found"
+            classNmae="mt-0 border-0 py-7"
+          />
+        )}
+      </DropdownWrapper>
+    </main>
+  );
+};
