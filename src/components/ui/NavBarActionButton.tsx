@@ -93,7 +93,10 @@ export const CartAction = () => {
             actionText="Browse products"
             description="Items you add will show up here. Start browsing to find something you'll love."
             icon={ShoppingBag}
-            onAction={() => router.push("/products")}
+            onAction={() => {
+              router.push("/products");
+              toggleIsOpen(false);
+            }}
             title="Your cart is empty"
             classNmae="mt-0 border-0 py-7"
           />
@@ -144,7 +147,10 @@ export const WishlishAction = () => {
             actionText="Browse products"
             description="Your favorites items will show up here. Start browsing to find something you'll love."
             icon={Heart}
-            onAction={() => router.push("/products")}
+            onAction={() => {
+              router.push("/products");
+              toggleIsOpen(false);
+            }}
             title="Your wishlist is empty"
             classNmae="mt-0 border-0 py-7"
           />
@@ -243,7 +249,10 @@ export const SearchAction = () => {
             actionText="Browser Products"
             description="We couldn't find anything matching your filters or search query. Try modifying your keywords."
             icon={Frown}
-            onAction={() => router.push("/products")}
+            onAction={() => {
+              router.push("/products");
+              toggleIsOpen(false);
+            }}
             title="No Products Found"
             classNmae="mt-0 border-0 py-7"
           />
