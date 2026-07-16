@@ -173,7 +173,7 @@ export default function HeroCarousel() {
 
             <div id="slide-actions" className="flex items-center gap-4 pt-2">
               <Link
-                href={"/"}
+                href={"/products"}
                 className={cn(
                   `transition-300 rounded-xl bg-linear-to-r px-6 py-3.5 text-sm font-semibold text-white hover:scale-102 active:scale-98`,
                   slide.accentColor,

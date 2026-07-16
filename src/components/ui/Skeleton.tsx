@@ -108,3 +108,46 @@ export function ProductsPageSkeleton() {
     </div>
   );
 }
+
+export function ProductDetailSkeleton() {
+  return (
+    <div className="min-h-screen w-full bg-neutral-50 pb-20 dark:bg-neutral-950">
+      <div className="wrapper py-8">
+        {/* Breadcrumb Skeleton */}
+        <div className="h-4 w-48 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+
+        {/* Main Details Skeleton */}
+        <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-2">
+          {/* Gallery Skeleton */}
+          <div className="space-y-4">
+            <div className="aspect-square w-full animate-pulse rounded-3xl bg-neutral-200 dark:bg-neutral-800" />
+            <div className="flex gap-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="size-18 animate-pulse rounded-2xl bg-neutral-200 dark:bg-neutral-800"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Info Skeleton */}
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <div className="h-4 w-24 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+              <div className="h-10 w-3/4 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+              <div className="h-6 w-32 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+            </div>
+            <div className="h-12 w-48 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+            <div className="h-24 w-full animate-pulse rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+            <div className="h-12 w-full animate-pulse rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+            <div className="flex gap-4">
+              <div className="h-12 w-32 animate-pulse rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+              <div className="h-12 flex-1 animate-pulse rounded-xl bg-neutral-200 dark:bg-neutral-800" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

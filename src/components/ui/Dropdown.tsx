@@ -78,9 +78,12 @@ export const CartDropdownItem = ({
   quantity,
   thumbnail,
   title,
-  total,
   compType = "cart",
-}: CartProduct & { compType?: "cart" | "wishlist" | "search" }) => {
+  onclick,
+}: CartProduct & {
+  compType?: "cart" | "wishlist" | "search";
+  onclick?: () => void;
+}) => {
   const router = useRouter();
   const { shopDispatcher, products } = useShop();
 
@@ -112,7 +115,10 @@ export const CartDropdownItem = ({
   return (
     <DropdownItem
       className="group gap-3 p-2"
-      onClick={() => router.push(`/products/${id}`)}
+      onClick={() => {
+        onclick?.();
+        router.push(`/products/${id}`);
+      }}
     >
       <div className="transition-300 relative size-16 shrink-0 overflow-hidden rounded-lg bg-neutral-100 group-hover:bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-950">
         <Image

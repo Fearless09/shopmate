@@ -1,44 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { Heart, Star, Eye, ShoppingCart } from "lucide-react";
-import { calcTotal, cn, formatCurrency } from "@/lib/utils";
+import { Heart, Eye, ShoppingCart } from "lucide-react";
+import { cn, formatCurrency } from "@/lib/utils";
 import { useShop } from "@/context/ShopContext";
 import { ComponentProps, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { renderProductStars } from "@/lib/product";
+import { toCartProduct } from "@/lib/product-page";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const router = useRouter();
   const { shopDispatcher, wishList, cart } = useShop();
 
   const isWishlisted = wishList.some((p) => p.id === product.id);
   const isCarted = cart ? cart.product.some((p) => p.id === product.id) : false;
 
-  const cartProduct: CartProduct = useMemo(() => {
-    const quantity = 1;
-    const { discountedPrice, total } = calcTotal({
-      discountPercentage: product.discountPercentage,
-      price: product.price,
-      quantity,
-    });
-
-    return {
-      id: product.id,
-      title: product.title,
-      thumbnail: product.thumbnail,
-
-      price: product.price,
-      discountPercentage: product.discountPercentage,
-      quantity,
-      total,
-      discountedTotal: total - discountedPrice,
-    };
-  }, [product]);
+  const cartProduct: CartProduct = useMemo(
+    () => toCartProduct(product, 1),
+    [product],
+  );
 
   return (
     <main className="transition-300 relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm hover:border-neutral-300 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-neutral-700">
@@ -64,7 +48,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Image Area */}
       <Link
-        href={`/product/${product.id}`}
+        href={`/products/${product.id}`}
         className="group relative block aspect-square w-full cursor-pointer overflow-hidden bg-neutral-100 dark:bg-neutral-900"
       >
         <Image
@@ -95,7 +79,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </span>
 
         {/* Title */}
-        <Link href={`/product/${product.id}`}>
+        <Link href={`/products/${product.id}`}>
           <h3 className="transition-300 mt-1 line-clamp-1 cursor-pointer text-sm font-bold text-neutral-800 hover:text-indigo-600 dark:text-neutral-200 dark:hover:text-indigo-400">
             {product.title}
           </h3>
@@ -104,7 +88,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Ratings */}
         <div className="mt-2 flex items-center gap-1.5">
           <span className="flex items-center">
-            {renderStars(product.rating)}
+            {renderProductStars(product.rating)}
           </span>
           <span className="text-[10px] font-medium text-neutral-400 dark:text-neutral-500">
             ({product.reviews.length})
@@ -146,38 +130,6 @@ export function ProductCard({ product }: ProductCardProps) {
     </main>
   );
 }
-
-// Generate star ratings
-const renderStars = (rating: number) => {
-  const stars = [];
-  const fullStars = Math.floor(rating);
-  const hasHalf = rating % 1 >= 0.5;
-
-  for (let i = 1; i <= 5; i++) {
-    if (i <= fullStars) {
-      stars.push(
-        <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />,
-      );
-    } else if (i === fullStars + 1 && hasHalf) {
-      stars.push(
-        <div key={i} className="relative">
-          <Star className="size-3.5 text-neutral-300 dark:text-neutral-700" />
-          <div className="absolute inset-y-0 left-0 w-[55%] overflow-hidden">
-            <Star className="size-3.5 fill-amber-400 text-amber-400" />
-          </div>
-        </div>,
-      );
-    } else {
-      stars.push(
-        <Star
-          key={i}
-          className="size-3.5 text-neutral-300 dark:text-neutral-700"
-        />,
-      );
-    }
-  }
-  return stars;
-};
 
 type ProductCardWrapper = ComponentProps<"main">;
 export function ProductCardWrapper({

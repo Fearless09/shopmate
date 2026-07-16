@@ -92,7 +92,7 @@ export default function ProductsCatalog() {
     <>
       {/* Grid Content Section */}
       <section
-        className="wrapper mb-10 grid grid-cols-1 gap-8 pt-20 lg:grid-cols-4"
+        className="wrapper mb-10 grid scroll-mt-24 grid-cols-1 gap-8 pt-10 lg:grid-cols-4"
         id="products-grid-section"
       >
         <Sidebar

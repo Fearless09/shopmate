@@ -1,3 +1,5 @@
+import { calcTotal } from "./utils";
+
 export const scrollToById = (id: string) => {
   setTimeout(() => {
     const section = document.getElementById(id);
@@ -36,4 +38,26 @@ export const getPageNumbers = (current: number, total: number) => {
     pages.push(total);
   }
   return pages;
+};
+
+export const toCartProduct = (
+  product: Product,
+  quantity: number,
+): CartProduct => {
+  const { total, discountedTotal } = calcTotal({
+    discountPercentage: product.discountPercentage,
+    price: product.price,
+    quantity,
+  });
+
+  return {
+    id: product.id,
+    title: product.title,
+    thumbnail: product.thumbnail,
+    price: product.price,
+    discountPercentage: product.discountPercentage,
+    quantity,
+    total,
+    discountedTotal,
+  };
 };

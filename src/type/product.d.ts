@@ -22,6 +22,8 @@ declare global {
     qrCode: string;
   }
 
+  type ProductAvailabilityStatus = "In Stock" | "Low Stock" | "Out of Stock";
+
   interface Product {
     id: number;
     title: string;
@@ -38,7 +40,7 @@ declare global {
     dimensions: ProductDimensions;
     warrantyInformation: string;
     shippingInformation: string;
-    availabilityStatus: string; // "In Stock" | "Low Stock" | "Out of Stock"
+    availabilityStatus: ProductAvailabilityStatus;
     reviews: ProductReview[];
     returnPolicy: string;
     minimumOrderQuantity: number;

@@ -3,7 +3,7 @@
 import { useShop } from "@/context/ShopContext";
 import { useClose } from "@/hooks/useClose";
 import { useToggle } from "@/hooks/useToggle";
-import { calcTotal, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { ChevronDown, Frown, Heart, Search, ShoppingBag } from "lucide-react";
 import { CartDropdownItem, DropdownItem, DropdownWrapper } from "./Dropdown";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import { EmptyState } from "./EmptyState";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { CartItemSkeleton } from "./Skeleton";
+import { toCartProduct } from "@/lib/product-page";
 
 export const CategoryAction = () => {
   const { categories } = useShop();
@@ -84,6 +85,7 @@ export const CartAction = () => {
               key={cartProduct.id}
               {...cartProduct}
               compType="cart"
+              onclick={() => toggleIsOpen(false)}
             />
           ))
         ) : (
@@ -130,7 +132,12 @@ export const WishlishAction = () => {
           ))
         ) : wishList.length > 0 ? (
           wishList.map((item) => (
-            <CartDropdownItem key={item.id} {...item} compType="wishlist" />
+            <CartDropdownItem
+              key={item.id}
+              {...item}
+              compType="wishlist"
+              onclick={() => toggleIsOpen(false)}
+            />
           ))
         ) : (
           <EmptyState
@@ -169,26 +176,8 @@ export const SearchAction = () => {
         p.category.toLowerCase().includes(val),
     );
 
-    const transfromProduct: CartProduct[] = findProduct.map(
-      ({ id, title, price, discountPercentage, thumbnail }) => {
-        const quantity = 1;
-        const { discountedTotal, total } = calcTotal({
-          discountPercentage,
-          price,
-          quantity,
-        });
-
-        return {
-          id,
-          title,
-          price,
-          discountPercentage,
-          thumbnail,
-          quantity,
-          discountedTotal,
-          total,
-        };
-      },
+    const transfromProduct: CartProduct[] = findProduct.map((p) =>
+      toCartProduct(p, 1),
     );
 
     return transfromProduct;
@@ -242,7 +231,12 @@ export const SearchAction = () => {
           ))
         ) : searchProducts.length > 0 ? (
           searchProducts.map((item) => (
-            <CartDropdownItem key={item.id} {...item} compType="search" />
+            <CartDropdownItem
+              key={item.id}
+              {...item}
+              compType="search"
+              onclick={() => toggleIsOpen(false)}
+            />
           ))
         ) : (
           <EmptyState
