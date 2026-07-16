@@ -1,11 +1,11 @@
 "use client";
 
 import { useShop } from "@/context/ShopContext";
-import { cn } from "@/lib/utils";
+import { cn, scrollToById } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { DropdownItem } from "../ui/Dropdown";
-import { getCategoryCount, scrollToById } from "@/lib/product-page";
+import { getCategoryCount } from "@/lib/product";
 
 type SideBarProps = {
   localSearch: string;

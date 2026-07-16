@@ -146,5 +146,5 @@ const contact = [
     icon: MapPin,
   },
   { name: "+1 (800) 555-0199", icon: Phone },
-  { name: "[EMAIL_ADDRESS]", icon: Mail },
+  { name: "info@shopmate.com", icon: Mail },
 ];

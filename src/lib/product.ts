@@ -1,14 +1,5 @@
 import { calcTotal } from "./utils";
 
-export const scrollToById = (id: string) => {
-  setTimeout(() => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, 50);
-};
-
 export const getCategoryCount = (catSlug: string, products: Product[]) => {
   if (catSlug === "all") return products.length;
 
@@ -39,6 +30,56 @@ export const getPageNumbers = (current: number, total: number) => {
   }
   return pages;
 };
+
+const RESULT_LIMIT = 8;
+export function filterProduct({
+  category,
+  products,
+  search,
+  sort,
+  limit,
+}: {
+  products: Product[];
+  search: string;
+  category: string;
+  sort: string;
+  limit?: number | null;
+}): Product[] {
+  let result = [...products];
+
+  const term = search.trim().toLowerCase();
+  if (term) {
+    result = result.filter(
+      (p) =>
+        p.title.toLowerCase().includes(term) ||
+        p.description.toLowerCase().includes(term) ||
+        p.category.toLowerCase().includes(term),
+    );
+  }
+
+  if (category && category.toLowerCase() !== "all") {
+    result = result.filter(
+      (p) => p.category.toLowerCase() === category.toLowerCase(),
+    );
+  }
+
+  switch (sort) {
+    case "price-asc":
+      result.sort((a, b) => a.price - b.price);
+      break;
+    case "price-desc":
+      result.sort((a, b) => b.price - a.price);
+      break;
+    case "rating":
+      result.sort((a, b) => b.rating - a.rating);
+      break;
+  }
+
+  if (limit === null) {
+    return result;
+  }
+  return result.slice(0, limit ?? RESULT_LIMIT);
+}
 
 export const toCartProduct = (
   product: Product,

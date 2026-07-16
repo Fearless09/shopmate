@@ -6,8 +6,8 @@ import { cn, formatCurrency } from "@/lib/utils";
 import { useShop } from "@/context/ShopContext";
 import { ComponentProps, useMemo } from "react";
 import Link from "next/link";
-import { renderProductStars } from "@/lib/product";
-import { toCartProduct } from "@/lib/product-page";
+import { renderProductStars } from "@/lib/review";
+import { toCartProduct } from "@/lib/product";
 
 interface ProductCardProps {
   product: Product;

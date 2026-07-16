@@ -1,6 +1,6 @@
 "use client";
 
-import { getPageNumbers } from "@/lib/product-page";
+import { getPageNumbers } from "@/lib/product";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ComponentProps } from "react";

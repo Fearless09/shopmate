@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://shopmate.vercel.app";
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://shopmate-demo.vercel.app";
 
 const SITE_NAME = "Shopmate";
 const TITLE = "Shopmate | Modern E-commerce Landing Page";
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     images: {
-      url: "/og-image.png",
+      url: "/og.png",
       width: 1200,
       height: 630,
       alt: "Shopmate — Modern E-commerce Landing Page",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     images: {
-      url: "/og-image.png",
+      url: "/og.png",
       alt: "Shopmate — Modern E-commerce Landing Page",
     },
   },
@@ -136,6 +136,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} scrollbar-thin scrollbar-thumb-indigo-500/70 ${geistMono.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="relative flex min-h-screen flex-col bg-white dark:bg-neutral-950">

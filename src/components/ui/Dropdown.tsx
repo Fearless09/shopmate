@@ -87,7 +87,7 @@ export const CartDropdownItem = ({
   const router = useRouter();
   const { shopDispatcher, products } = useShop();
 
-  const product = products.find((product) => product.id);
+  const product = products.find((product) => product.id === id);
   const MAX_QUANTITY = product?.stock || 15;
 
   const updateQuantity = (num: number) => {
@@ -181,17 +181,9 @@ export const CartDropdownItem = ({
                 type="text"
                 inputMode="numeric"
                 value={quantity}
-                onChange={(e) => {
-                  // allow only digits while typing
-                  const digitsOnly = Number(e.target.value.replace(/\D/g, ""));
-                  updateQuantity(digitsOnly);
-                }}
-                // onBlur={handleInputBlur}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") e.currentTarget.blur();
-                }}
                 aria-label={`Quantity for ${title}`}
                 className="h-7 w-9 border-x border-neutral-200 bg-transparent text-center text-xs font-semibold text-neutral-600 outline-none dark:border-neutral-800 dark:text-neutral-400"
+                readOnly
               />
 
               <button

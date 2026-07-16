@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useRef } from "react";
-import { notFound, useRouter } from "next/navigation";
 import { useShop } from "@/context/ShopContext";
 import { cn } from "@/lib/utils";
 import { ProductDetailSkeleton } from "../ui/Skeleton";
@@ -20,7 +19,6 @@ type TabId = "description" | "dimensions" | "reviews";
 export default function ProductDetailClient({
   productId,
 }: ProductDetailClientProps) {
-  const router = useRouter();
   const { products, loading } = useShop();
 
   const reviewsRef = useRef<HTMLDivElement>(null);
@@ -31,7 +29,7 @@ export default function ProductDetailClient({
   }, [products, productId]);
 
   if (loading) return <ProductDetailSkeleton />;
-  if (!product) return notFound();
+  if (!product) return;
 
   return (
     <section className="pb-20 text-neutral-800 dark:text-neutral-200">

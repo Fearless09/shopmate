@@ -8,7 +8,8 @@ import {
   useReducer,
 } from "react";
 import { fetcher, getData, saveData } from "@/lib/fetcher";
-import { calcTotal } from "@/lib/utils";
+import { calcTotal, cartTotal } from "@/lib/utils";
+import { MOCK_PRODUCTS } from "@/data/products";
 
 interface ShopContextType extends State {
   shopDispatcher: (acton: Action) => void;
@@ -163,18 +164,23 @@ const reducer = (state: State, action: Action): State => {
           )
         : [action.payload];
 
-      const totalProducts = product.length;
-      const totalQuantity = product.reduce((acc, sum) => {
-        return acc + sum.quantity;
-      }, 0);
+      const { discountedTotal, total, totalProducts, totalQuantity } =
+        cartTotal(product);
 
       const cart: Cart = state.cart
-        ? { ...state.cart, product, totalProducts, totalQuantity }
+        ? {
+            ...state.cart,
+            product,
+            totalProducts,
+            totalQuantity,
+            total,
+            discountedTotal,
+          }
         : {
-            discountedTotal: 0,
             id: crypto.randomUUID(),
             product,
-            total: 0,
+            total,
+            discountedTotal,
             totalProducts,
             totalQuantity,
             userId: 1,
@@ -190,15 +196,17 @@ const reducer = (state: State, action: Action): State => {
       const newCartProduct: CartProduct[] = state.cart.product.filter(
         (item) => item.id !== action.payload,
       );
-      const totalQuantity = newCartProduct.reduce((acc, sum) => {
-        return acc + sum.quantity;
-      }, 0);
+
+      const { discountedTotal, total, totalProducts, totalQuantity } =
+        cartTotal(newCartProduct);
 
       const cart: Cart = {
         ...state.cart,
         product: newCartProduct,
-        totalProducts: newCartProduct.length,
         totalQuantity,
+        discountedTotal,
+        total,
+        totalProducts,
       };
 
       saveData(cartKey, cart);
@@ -206,7 +214,7 @@ const reducer = (state: State, action: Action): State => {
     }
 
     case "clear-cart": {
-      saveData(cartKey, []);
+      saveData(cartKey, null);
       return { ...state, cart: null };
     }
 
@@ -231,7 +239,17 @@ const reducer = (state: State, action: Action): State => {
           }
         });
 
-        return { ...state.cart, product: newCartProduct };
+        const { discountedTotal, total, totalProducts, totalQuantity } =
+          cartTotal(newCartProduct);
+
+        return {
+          ...state.cart,
+          product: newCartProduct,
+          discountedTotal,
+          total,
+          totalProducts,
+          totalQuantity,
+        };
       }
 
       saveData(cartKey, updateCart());

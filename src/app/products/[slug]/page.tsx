@@ -1,5 +1,6 @@
 import ProductDetailClient from "@/components/product-details";
 import { fetcher } from "@/lib/fetcher";
+import { calcTotal } from "@/lib/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -18,19 +19,19 @@ export async function generateMetadata(
     const product = await fetcher<Product>(`/products/${productId}`);
     const previousImages = (await parent).openGraph?.images || [];
 
-    // ---- Derived values ----
-    const discountedPrice = (
-      product.price *
-      (1 - product.discountPercentage / 100)
-    ).toFixed(2);
-
-    const hasDiscount = product.discountPercentage > 0;
-    const inStock = product.availabilityStatus === "In Stock";
-
     const title = `${product.title} | Shopmate`;
+    const { discountedTotal } = calcTotal({
+      discountPercentage: product.discountPercentage,
+      price: product.price,
+      quantity: 1,
+    });
 
-    // Keep description tight and informative for SEO (aim under 160 chars)
-    const rawDescription = `${product.description} — ${hasDiscount ? `${product.discountPercentage}% off, now $${discountedPrice}` : `$${discountedPrice}`}. ${product.shippingInformation}.`;
+    const rawDescription = `${product.description} — ${
+      product.discountPercentage > 0
+        ? `${product.discountPercentage}% off, now $${discountedTotal}`
+        : `$${discountedTotal}`
+    }. ${product.shippingInformation}.`;
+
     const description =
       rawDescription.length > 160
         ? rawDescription.slice(0, 157).trimEnd() + "..."
@@ -91,7 +92,7 @@ export async function generateMetadata(
         ],
       },
       other: {
-        "product:price:amount": discountedPrice,
+        "product:price:amount": discountedTotal,
         "product:price:currency": "USD",
         "product:availability": product.availabilityStatus,
         "product:condition": "new",

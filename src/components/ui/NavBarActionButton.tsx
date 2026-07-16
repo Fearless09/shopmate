@@ -11,7 +11,7 @@ import { EmptyState } from "./EmptyState";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { CartItemSkeleton } from "./Skeleton";
-import { toCartProduct } from "@/lib/product-page";
+import { toCartProduct } from "@/lib/product";
 
 export const CategoryAction = () => {
   const { categories } = useShop();

@@ -24,55 +24,14 @@ export function formatDate(date: Date) {
   }).format(date);
 }
 
-const RESULT_LIMIT = 8;
-export function filterProduct({
-  category,
-  products,
-  search,
-  sort,
-  limit,
-}: {
-  products: Product[];
-  search: string;
-  category: string;
-  sort: string;
-  limit?: number | null;
-}): Product[] {
-  let result = [...products];
-
-  const term = search.trim().toLowerCase();
-  if (term) {
-    result = result.filter(
-      (p) =>
-        p.title.toLowerCase().includes(term) ||
-        p.description.toLowerCase().includes(term) ||
-        p.category.toLowerCase().includes(term),
-    );
-  }
-
-  if (category && category.toLowerCase() !== "all") {
-    result = result.filter(
-      (p) => p.category.toLowerCase() === category.toLowerCase(),
-    );
-  }
-
-  switch (sort) {
-    case "price-asc":
-      result.sort((a, b) => a.price - b.price);
-      break;
-    case "price-desc":
-      result.sort((a, b) => b.price - a.price);
-      break;
-    case "rating":
-      result.sort((a, b) => b.rating - a.rating);
-      break;
-  }
-
-  if (limit === null) {
-    return result;
-  }
-  return result.slice(0, limit ?? RESULT_LIMIT);
-}
+export const scrollToById = (id: string) => {
+  setTimeout(() => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 50);
+};
 
 export function calcTotal({
   discountPercentage,
@@ -87,9 +46,21 @@ export function calcTotal({
   const discountedPrice = (discountPercentage / 100) * total;
   const discountedTotal = total - discountedPrice;
 
-  return {
-    discountedPrice,
-    discountedTotal,
-    total,
-  };
+  return { discountedPrice, discountedTotal, total };
+}
+
+export function cartTotal(cartProducts: CartProduct[]) {
+  const totalProducts = cartProducts.length;
+  const totals = cartProducts.reduce(
+    (acc, item) => {
+      const totalQuantity = acc.totalQuantity + item.quantity;
+      const total = acc.total + item.total;
+      const discountedTotal = acc.discountedTotal + item.discountedTotal;
+
+      return { total, discountedTotal, totalQuantity };
+    },
+    { total: 0, discountedTotal: 0, totalQuantity: 0 },
+  );
+
+  return { ...totals, totalProducts };
 }

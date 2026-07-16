@@ -1,7 +1,7 @@
 import { useShop } from "@/context/ShopContext";
 import { gsap } from "@/lib/gsap";
-import { renderProductStars } from "@/lib/product";
-import { toCartProduct } from "@/lib/product-page";
+import { renderProductStars } from "@/lib/review";
+import { toCartProduct } from "@/lib/product";
 import { calcTotal, cn, formatCurrency } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import {
@@ -14,14 +14,15 @@ import {
   Truck,
 } from "lucide-react";
 import { ComponentProps, FC, useCallback, useMemo, useRef } from "react";
+import Link from "next/link";
 
 type DetailProps = {
   product: Product;
   onReview: () => void;
 };
 
-const STOCK_MAX = 20;
-const STOCK_WARNING = 5;
+const STOCK_MAX = 100;
+const STOCK_WARNING = 10;
 
 const Details = ({ onReview, product }: DetailProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,6 +58,20 @@ const Details = ({ onReview, product }: DetailProps) => {
     },
     [product],
   );
+
+  const handleWishlist = () => {
+    if (isWishlisted) {
+      shopDispatcher({
+        type: "delete-wishlist",
+        payload: product.id,
+      });
+    } else {
+      shopDispatcher({
+        type: "add-wishlist",
+        payload: newCartProduct,
+      });
+    }
+  };
 
   useGSAP(
     () => {
@@ -178,7 +193,7 @@ const Details = ({ onReview, product }: DetailProps) => {
             </div>
             <p className="text-[11px] font-semibold text-neutral-500 dark:text-neutral-400">
               {product.availabilityStatus === "Low Stock"
-                ? `Hurry, only ${product.stock} items left in stock!`
+                ? `Hurry, only ${product.stock} item${product.stock > 1 ? "s" : ""} left in stock!`
                 : `${product.stock} items available`}
             </p>
           </>
@@ -187,100 +202,86 @@ const Details = ({ onReview, product }: DetailProps) => {
 
       {/* Interactive dispatches CTAs */}
       {product.availabilityStatus !== "Out of Stock" && (
-        <main className="anim-fade-in flex flex-wrap items-center gap-4">
-          {/* Stepper Quantity selection */}
-          {existingCartItem && (
-            <div className="flex items-center rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900/60">
-              <button
-                type="button"
-                onClick={() =>
-                  updateCartQuantity(existingCartItem.quantity - 1)
-                }
-                disabled={existingCartItem.quantity <= 1}
-                className="transition-300 flex size-11 cursor-pointer items-center justify-center rounded-l-xl text-neutral-500 hover:bg-neutral-50 disabled:pointer-events-none disabled:opacity-30 dark:hover:bg-neutral-800"
-              >
-                <Minus className="size-4" />
-              </button>
+        <>
+          <main className="anim-fade-in flex flex-wrap items-center gap-4">
+            {/* Stepper Quantity selection */}
+            {existingCartItem && (
+              <div className="flex items-center rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900/60">
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateCartQuantity(existingCartItem.quantity - 1)
+                  }
+                  disabled={existingCartItem.quantity <= 1}
+                  className="transition-300 flex size-11 cursor-pointer items-center justify-center rounded-l-xl text-neutral-500 hover:bg-neutral-50 disabled:pointer-events-none disabled:opacity-30 dark:hover:bg-neutral-800"
+                >
+                  <Minus className="size-4" />
+                </button>
 
-              <span className="w-12 text-center text-sm font-bold text-neutral-950 dark:text-white">
-                {existingCartItem.quantity}
+                <span className="w-12 text-center text-sm font-bold text-neutral-950 dark:text-white">
+                  {existingCartItem.quantity}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateCartQuantity(existingCartItem.quantity + 1)
+                  }
+                  disabled={existingCartItem.quantity >= product.stock}
+                  className="transition-300 flex size-11 cursor-pointer items-center justify-center rounded-r-xl text-neutral-500 hover:bg-neutral-50 disabled:pointer-events-none disabled:opacity-30 dark:hover:bg-neutral-800"
+                >
+                  <Plus className="size-4" />
+                </button>
+              </div>
+            )}
+
+            {/* Add to Cart CTA */}
+            <button
+              onClick={() => {
+                if (existingCartItem) {
+                  shopDispatcher({
+                    type: "delete-cart",
+                    payload: product.id,
+                  });
+                } else {
+                  shopDispatcher({
+                    type: "add-cart",
+                    payload: newCartProduct,
+                  });
+                }
+              }}
+              className={cn(
+                "transition-300 inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl text-sm font-extrabold tracking-wide shadow-sm active:scale-98",
+                "bg-indigo-600 text-white shadow-indigo-600/10 hover:bg-indigo-500 hover:shadow-md",
+                {
+                  "border border-neutral-200 bg-neutral-100 text-neutral-700 hover:bg-neutral-200/60 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800":
+                    existingCartItem,
+                },
+              )}
+            >
+              <ShoppingCart className="size-4.5" />
+              <span>
+                {existingCartItem ? "Remove From Cart" : "Add to Cart"}
               </span>
+            </button>
 
-              <button
-                type="button"
-                onClick={() =>
-                  updateCartQuantity(existingCartItem.quantity + 1)
-                }
-                disabled={existingCartItem.quantity >= product.stock}
-                className="transition-300 flex size-11 cursor-pointer items-center justify-center rounded-r-xl text-neutral-500 hover:bg-neutral-50 disabled:pointer-events-none disabled:opacity-30 dark:hover:bg-neutral-800"
+            {/* Add to Wishlist Circle button */}
+            {!existingCartItem && <WishListButton product={product} />}
+          </main>
+
+          {existingCartItem && (
+            <main className="anim-fade-in flex items-center gap-4">
+              <Link
+                href={"/checkout"}
+                className="transition-300 inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-indigo-600 text-sm font-extrabold tracking-wide text-white shadow-sm shadow-indigo-600/10 hover:bg-indigo-500 hover:shadow-md active:scale-98"
               >
-                <Plus className="size-4" />
-              </button>
-            </div>
+                Proceed to Checkout
+              </Link>
+
+              <WishListButton product={product} />
+            </main>
           )}
-
-          {/* Add to Cart CTA */}
-          <button
-            onClick={() => {
-              if (existingCartItem) {
-                shopDispatcher({
-                  type: "delete-cart",
-                  payload: product.id,
-                });
-              } else {
-                shopDispatcher({
-                  type: "add-cart",
-                  payload: newCartProduct,
-                });
-              }
-            }}
-            className={cn(
-              "transition-300 inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl text-sm font-extrabold tracking-wide shadow-sm active:scale-98",
-              "bg-indigo-600 text-white shadow-indigo-600/10 hover:bg-indigo-500 hover:shadow-md",
-              {
-                "border border-neutral-200 bg-neutral-100 text-neutral-700 hover:bg-neutral-200/60 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800":
-                  existingCartItem,
-              },
-            )}
-          >
-            <ShoppingCart className="size-4.5" />
-            <span>{existingCartItem ? "Remove From Cart" : "Add to Cart"}</span>
-          </button>
-
-          {/* Add to Wishlist Circle button */}
-          <button
-            onClick={() => {
-              if (isWishlisted) {
-                shopDispatcher({
-                  type: "delete-wishlist",
-                  payload: product.id,
-                });
-              } else {
-                shopDispatcher({
-                  type: "add-wishlist",
-                  payload: newCartProduct,
-                });
-              }
-            }}
-            className={cn(
-              "transition-300 flex size-11 cursor-pointer items-center justify-center rounded-xl border shadow-sm active:scale-95",
-              "border-neutral-200 bg-white text-neutral-500 dark:border-neutral-800 dark:bg-neutral-950",
-              {
-                "border-rose-200 bg-rose-50/50 text-rose-500 dark:border-rose-900/30 dark:bg-rose-950/20":
-                  isWishlisted,
-                "hover:bg-neutral-50 hover:text-neutral-800 dark:hover:bg-neutral-900 dark:hover:text-white":
-                  !isWishlisted,
-              },
-            )}
-            aria-label="Add to Wishlist"
-          >
-            <Heart
-              className={cn("transition-300 size-5", {
-                "scale-105 fill-rose-500 text-rose-500": isWishlisted,
-              })}
-            />
-          </button>
-        </main>
+        </>
       )}
 
       {/* Quick Specifications summary */}
@@ -305,5 +306,54 @@ const Summary = ({ Icon, title }: SummaryProps) => {
       <Icon className="size-4 shrink-0 text-indigo-500" />
       <span className="line-clamp-1">{title}</span>
     </div>
+  );
+};
+
+type WishListButtonProps = { product: Product };
+const WishListButton = ({ product }: WishListButtonProps) => {
+  const { wishList, shopDispatcher } = useShop();
+
+  const isWishlisted = useMemo(() => {
+    return wishList.some((item) => item.id === product.id);
+  }, [wishList, product.id]);
+  const newCartProduct: CartProduct = useMemo(() => {
+    return toCartProduct(product, 1);
+  }, [product]);
+
+  const handleWishlist = () => {
+    if (isWishlisted) {
+      shopDispatcher({
+        type: "delete-wishlist",
+        payload: product.id,
+      });
+    } else {
+      shopDispatcher({
+        type: "add-wishlist",
+        payload: newCartProduct,
+      });
+    }
+  };
+
+  return (
+    <button
+      onClick={handleWishlist}
+      className={cn(
+        "transition-300 flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-xl border shadow-sm active:scale-95",
+        "border-neutral-200 bg-white text-neutral-500 dark:border-neutral-800 dark:bg-neutral-950",
+        {
+          "border-rose-200 bg-rose-50/50 text-rose-500 dark:border-rose-900/30 dark:bg-rose-950/20":
+            isWishlisted,
+          "hover:bg-neutral-50 hover:text-neutral-800 dark:hover:bg-neutral-900 dark:hover:text-white":
+            !isWishlisted,
+        },
+      )}
+      aria-label="Add to Wishlist"
+    >
+      <Heart
+        className={cn("transition-300 size-5", {
+          "scale-105 fill-rose-500 text-rose-500": isWishlisted,
+        })}
+      />
+    </button>
   );
 };

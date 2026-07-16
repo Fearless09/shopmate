@@ -1,12 +1,11 @@
 "use client";
 
 import { useShop } from "@/context/ShopContext";
-import { cn, filterProduct } from "@/lib/utils";
-import { Search, X } from "lucide-react";
+import { filterProduct } from "@/lib/product";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "./Sidebar";
-import { scrollToById } from "@/lib/product-page";
+import { scrollToById } from "@/lib/utils";
 import Toolbar from "./Toolbar";
 import ProductionSection from "./ProductSection";
 import Pagination from "./Pagination";

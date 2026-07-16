@@ -1,4 +1,4 @@
-import { renderProductStars, reviewsStat } from "@/lib/product";
+import { renderProductStars, reviewsStat } from "@/lib/review";
 import { formatDate } from "@/lib/utils";
 
 type ReviewsProp = { product: Product };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useShop } from "@/context/ShopContext";
-import { getCategoryCount } from "@/lib/product-page";
+import { getCategoryCount } from "@/lib/product";
 import { cn } from "@/lib/utils";
 import { Search, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
