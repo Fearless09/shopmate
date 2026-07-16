@@ -14,7 +14,7 @@ declare global {
 
   interface Cart {
     id: number | string;
-    product: CartProduct[];
+    products: CartProduct[];
     total: number;
     discountedTotal: number;
     userId: number;

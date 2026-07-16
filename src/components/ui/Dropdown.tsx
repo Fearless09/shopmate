@@ -69,7 +69,6 @@ export const DropdownItem = ({ className, ...props }: DropdownItemProp) => {
   );
 };
 
-const MIN_QUANTITY = 1;
 export const CartDropdownItem = ({
   discountPercentage,
   discountedTotal,
@@ -91,12 +90,7 @@ export const CartDropdownItem = ({
   const MAX_QUANTITY = product?.stock || 15;
 
   const updateQuantity = (num: number) => {
-    const updateQty =
-      num < MIN_QUANTITY
-        ? MIN_QUANTITY
-        : num > MAX_QUANTITY
-          ? MAX_QUANTITY
-          : num;
+    const updateQty = Math.max(1, Math.min(num, MAX_QUANTITY));
 
     shopDispatcher({
       type: "update-cart-quantity",
@@ -170,7 +164,7 @@ export const CartDropdownItem = ({
             <div className="flex items-center rounded-lg border border-neutral-200 dark:border-neutral-800">
               <button
                 onClick={() => updateQuantity(quantity - 1)}
-                disabled={quantity <= MIN_QUANTITY}
+                disabled={quantity <= 1}
                 aria-label="Decrease quantity"
                 className="transition-300 flex size-7 cursor-pointer items-center justify-center rounded-l-lg text-neutral-500 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent dark:text-neutral-400 dark:hover:bg-neutral-900"
               >

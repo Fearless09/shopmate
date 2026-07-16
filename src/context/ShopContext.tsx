@@ -9,8 +9,7 @@ import {
 } from "react";
 import { fetcher, getData, saveData } from "@/lib/fetcher";
 import { calcTotal, cartTotal } from "@/lib/utils";
-import { MOCK_PRODUCTS } from "@/data/products";
-
+ 
 interface ShopContextType extends State {
   shopDispatcher: (acton: Action) => void;
 }
@@ -153,10 +152,10 @@ const reducer = (state: State, action: Action): State => {
     }
 
     case "add-cart": {
-      const product: CartProduct[] = state.cart
+      const products: CartProduct[] = state.cart
         ? Array.from(
             new Map(
-              [action.payload, ...state.cart.product].map((item) => [
+              [action.payload, ...state.cart.products].map((item) => [
                 item.id,
                 item,
               ]),
@@ -165,12 +164,12 @@ const reducer = (state: State, action: Action): State => {
         : [action.payload];
 
       const { discountedTotal, total, totalProducts, totalQuantity } =
-        cartTotal(product);
+        cartTotal(products);
 
       const cart: Cart = state.cart
         ? {
             ...state.cart,
-            product,
+            products,
             totalProducts,
             totalQuantity,
             total,
@@ -178,7 +177,7 @@ const reducer = (state: State, action: Action): State => {
           }
         : {
             id: crypto.randomUUID(),
-            product,
+            products,
             total,
             discountedTotal,
             totalProducts,
@@ -193,16 +192,16 @@ const reducer = (state: State, action: Action): State => {
     case "delete-cart": {
       if (!state.cart) return state;
 
-      const newCartProduct: CartProduct[] = state.cart.product.filter(
+      const newCartProducts: CartProduct[] = state.cart.products.filter(
         (item) => item.id !== action.payload,
       );
 
       const { discountedTotal, total, totalProducts, totalQuantity } =
-        cartTotal(newCartProduct);
+        cartTotal(newCartProducts);
 
       const cart: Cart = {
         ...state.cart,
-        product: newCartProduct,
+        products: newCartProducts,
         totalQuantity,
         discountedTotal,
         total,
@@ -224,7 +223,7 @@ const reducer = (state: State, action: Action): State => {
       function updateCart(): Cart | null {
         if (!state.cart) return state.cart;
 
-        const newCartProduct: CartProduct[] = state.cart.product.map((item) => {
+        const newCartProduct: CartProduct[] = state.cart.products.map((item) => {
           if (item.id === payload.id) {
             const quantity = Math.max(payload.quantity, 1);
             const { total, discountedTotal } = calcTotal({
@@ -244,7 +243,7 @@ const reducer = (state: State, action: Action): State => {
 
         return {
           ...state.cart,
-          product: newCartProduct,
+          products: newCartProduct,
           discountedTotal,
           total,
           totalProducts,

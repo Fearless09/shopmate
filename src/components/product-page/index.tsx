@@ -10,6 +10,7 @@ import Toolbar from "./Toolbar";
 import ProductionSection from "./ProductSection";
 import Pagination from "./Pagination";
 import MobileDrawer from "./MobileDrawer";
+import Banner from "../shared/Banner";
 
 export default function ProductsCatalog() {
   const { products } = useShop();
@@ -89,6 +90,16 @@ export default function ProductsCatalog() {
 
   return (
     <>
+      <Banner
+        description={
+          category === "all"
+            ? "Browse through our curated collection of premium products across all categories. Find exactly what you need with our advanced filters and search."
+            : `Explore our premium selection of ${category} products. Designed with quality and style in mind.`
+        }
+        title={category === "all" ? "Our Collections" : category}
+        tag={category === "all" ? "" : category.replace("-", " ")}
+        links={[{ href: "/products", name: "Products" }]}
+      />
       {/* Grid Content Section */}
       <section
         className="wrapper mb-10 grid scroll-mt-24 grid-cols-1 gap-8 pt-10 lg:grid-cols-4"

@@ -26,14 +26,10 @@ const STOCK_WARNING = 10;
 
 const Details = ({ onReview, product }: DetailProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { cart, wishList, shopDispatcher } = useShop();
-
-  const isWishlisted = useMemo(() => {
-    return wishList.some((item) => item.id === product.id);
-  }, [wishList, product.id]);
+  const { cart, shopDispatcher } = useShop();
 
   const existingCartItem = useMemo(() => {
-    return cart?.product.find((item) => item.id === product.id);
+    return cart?.products.find((item) => item.id === product.id);
   }, [cart, product.id]);
 
   const newCartProduct: CartProduct = useMemo(() => {
@@ -50,7 +46,7 @@ const Details = ({ onReview, product }: DetailProps) => {
 
   const updateCartQuantity = useCallback(
     (number: number) => {
-      const newQuantity = number < 1 ? 1 : Math.min(number, product.stock);
+      const newQuantity = Math.max(1, Math.min(number, product.stock));
       shopDispatcher({
         type: "update-cart-quantity",
         payload: { id: product.id, quantity: newQuantity },
@@ -58,20 +54,6 @@ const Details = ({ onReview, product }: DetailProps) => {
     },
     [product],
   );
-
-  const handleWishlist = () => {
-    if (isWishlisted) {
-      shopDispatcher({
-        type: "delete-wishlist",
-        payload: product.id,
-      });
-    } else {
-      shopDispatcher({
-        type: "add-wishlist",
-        payload: newCartProduct,
-      });
-    }
-  };
 
   useGSAP(
     () => {

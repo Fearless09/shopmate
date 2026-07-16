@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useShop } from "@/context/ShopContext";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { ShoppingBag, Heart, Menu, X, Search } from "lucide-react";
+ import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useScrollY } from "@/hooks/useScrollY";
 import Link from "next/link";
@@ -16,8 +15,7 @@ import {
 import { DropdownItem } from "../ui/Dropdown";
 
 export default function Navbar() {
-  const { cart } = useShop();
-  const [isOpen, setIsOpen] = useState(false);
+   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScrollY();
 
   return (

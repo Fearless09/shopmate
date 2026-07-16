@@ -1,17 +1,25 @@
-"use client"
+"use client";
 
 import { useShop } from "@/context/ShopContext";
 import { Sparkles } from "lucide-react";
 import { useMemo } from "react";
 import { ProductCard, ProductCardWrapper } from "../shared/ProductCard";
 
-type SimilarProductProps = { product?: Product };
+type SimilarProductProps = { product?: Product | Product[] };
 const SimilarProduct = ({ product }: SimilarProductProps) => {
   const { products } = useShop();
 
   const similarProducts = useMemo(() => {
     if (!product)
       return [...products].sort((a, b) => b.rating - a.rating).slice(0, 4);
+
+    if (Array.isArray(product)) {
+      const productIds = new Set(product.map((p) => p.id));
+      return [...products]
+        .filter((p) => !productIds.has(p.id))
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 4);
+    }
 
     return [...products]
       .filter((p) => p.category === product.category && p.id !== product.id)

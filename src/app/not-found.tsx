@@ -13,8 +13,8 @@ const NotFound = () => {
       <main className="flex items-center justify-center">
         <EmptyState
           icon={Info}
-          title="Product Not Found"
-          description="We couldn't resolve the product details. It may have been removed or catalog is empty."
+          title="Page Not Found"
+          description="We couldn't find the page you're looking for. It may have been removed or renamed."
           actionText="Back to Shop Catalog"
           onAction={() => router.push("/products")}
         />

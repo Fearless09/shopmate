@@ -54,55 +54,21 @@ export const CategoryAction = () => {
 };
 
 export const CartAction = () => {
-  const router = useRouter();
-  const { cart, loading } = useShop();
-  const [isOpen, toggleIsOpen] = useToggle(false);
-  const ref = useClose(() => toggleIsOpen(false));
+  const { cart } = useShop();
 
   return (
-    <main ref={ref} className="relative">
-      <button
-        className="transition-300 relative flex size-9 cursor-pointer items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
-        aria-label="Cart"
-        onClick={() => toggleIsOpen()}
-      >
-        <ShoppingBag className="size-5" />
-        {cart && cart.totalProducts > 0 && (
-          <span className="absolute -top-1 -right-1 flex size-4.25 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white ring-2 ring-white dark:ring-neutral-950">
-            {cart.totalProducts}
-          </span>
-        )}
-      </button>
-
-      <DropdownWrapper isOpen={isOpen} className="w-85">
-        {loading ? (
-          Array.from({ length: 3 }).map((_, idx) => (
-            <CartItemSkeleton key={idx} compType="cart" />
-          ))
-        ) : cart && cart.product.length > 0 ? (
-          cart.product.map((cartProduct) => (
-            <CartDropdownItem
-              key={cartProduct.id}
-              {...cartProduct}
-              compType="cart"
-              onclick={() => toggleIsOpen(false)}
-            />
-          ))
-        ) : (
-          <EmptyState
-            actionText="Browse products"
-            description="Items you add will show up here. Start browsing to find something you'll love."
-            icon={ShoppingBag}
-            onAction={() => {
-              router.push("/products");
-              toggleIsOpen(false);
-            }}
-            title="Your cart is empty"
-            classNmae="mt-0 border-0 py-7"
-          />
-        )}
-      </DropdownWrapper>
-    </main>
+    <Link
+      href={"/checkout"}
+      className="transition-300 relative flex size-9 cursor-pointer items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
+      aria-label="Cart"
+    >
+      <ShoppingBag className="size-5" />
+      {cart && cart.totalProducts > 0 && (
+        <span className="absolute -top-1 -right-1 flex size-4.25 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white ring-2 ring-white dark:ring-neutral-950">
+          {cart.totalProducts}
+        </span>
+      )}
+    </Link>
   );
 };
 

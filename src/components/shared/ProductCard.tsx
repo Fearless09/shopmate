@@ -17,7 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { shopDispatcher, wishList, cart } = useShop();
 
   const isWishlisted = wishList.some((p) => p.id === product.id);
-  const isCarted = cart ? cart.product.some((p) => p.id === product.id) : false;
+  const isCarted = cart ? cart.products.some((p) => p.id === product.id) : false;
 
   const cartProduct: CartProduct = useMemo(
     () => toCartProduct(product, 1),
