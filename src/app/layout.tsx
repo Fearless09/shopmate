@@ -38,9 +38,7 @@ const KEYWORDS = [
   "product catalog",
 ];
 
-// ---- Global Metadata ----
 export const metadata: Metadata = {
-  // ---- Core ----
   metadataBase: new URL(BASE_URL),
   title: {
     default: TITLE,
@@ -51,14 +49,9 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_NAME, url: BASE_URL }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
-  generator: "Next.js",
-
-  // ---- Canonical ----
   alternates: {
     canonical: "/",
   },
-
-  // ---- Open Graph ----
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -66,32 +59,23 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "/og-image.png", // 1200x630 recommended
-        width: 1200,
-        height: 630,
-        alt: "Shopmate — Modern E-commerce Landing Page",
-        type: "image/png",
-      },
-    ],
+    images: {
+      url: "/og-image.png",
+      width: 1200,
+      height: 630,
+      alt: "Shopmate — Modern E-commerce Landing Page",
+      type: "image/png",
+    },
   },
-
-  // ---- Twitter / X ----
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    // creator: "@shopmate", // uncomment if you have a Twitter handle
-    images: [
-      {
-        url: "/og-image.png",
-        alt: "Shopmate — Modern E-commerce Landing Page",
-      },
-    ],
+    images: {
+      url: "/og-image.png",
+      alt: "Shopmate — Modern E-commerce Landing Page",
+    },
   },
-
-  // ---- Robots ----
   robots: {
     index: true,
     follow: true,
@@ -103,49 +87,40 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-
-  // ---- App / PWA ----
   applicationName: SITE_NAME,
   category: "shopping",
-  manifest: "/manifest.json", // if you have a PWA manifest
   appleWebApp: {
     capable: true,
     title: SITE_NAME,
     statusBarStyle: "default",
   },
-
-  // ---- Icons ----
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon-16.png", type: "image/png", sizes: "16x16" },
-      { url: "/icon-32.png", type: "image/png", sizes: "32x32" },
-      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
-      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      {
+        url: "/android-chrome-192x192.png",
+        type: "image/png",
+        sizes: "192x192",
+      },
+      {
+        url: "/android-chrome-512x512.png",
+        type: "image/png",
+        sizes: "512x512",
+      },
     ],
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
     shortcut: "/favicon.ico",
   },
-
-  // ---- Verification (fill in when you have these) ----
-  verification: {
-    // google: "your-google-search-console-token",
-    // yandex: "your-yandex-token",
-  },
-
-  // ---- Other ----
-  other: {
-    "msapplication-TileColor": "#6366f1", // indigo-500 — matches your accent
-    "msapplication-config": "/browserconfig.xml",
-  },
 };
 
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" }, // neutral-950
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
   colorScheme: "light dark",
   width: "device-width",

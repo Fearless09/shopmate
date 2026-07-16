@@ -64,19 +64,12 @@ export async function generateMetadata(
     ];
 
     return {
-      // ---- Core ----
-      title: {
-        absolute: title, // bypass root layout template so it doesn't double up
-      },
+      title: { absolute: title },
       description,
       keywords,
-
-      // ---- Canonical ----
       alternates: {
         canonical: `/product/${product.id}`,
       },
-
-      // ---- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) ----
       openGraph: {
         title,
         description,
@@ -86,8 +79,6 @@ export async function generateMetadata(
         images: ogImages,
         locale: "en_US",
       },
-
-      // ---- Twitter / X Card ----
       twitter: {
         card: "summary_large_image",
         title,
@@ -99,23 +90,7 @@ export async function generateMetadata(
           },
         ],
       },
-
-      // ---- Robots ----
-      robots: {
-        index: inStock, // don't index out-of-stock pages — avoids wasting crawl budget
-        follow: true,
-        googleBot: {
-          index: inStock,
-          follow: true,
-          "max-image-preview": "large",
-          "max-snippet": -1,
-        },
-      },
-
-      // ---- Extra product-specific meta via `other` ----
       other: {
-        // Open Graph product namespace — not natively supported by Next.js
-        // Metadata API but injected as raw meta tags via `other`
         "product:price:amount": discountedPrice,
         "product:price:currency": "USD",
         "product:availability": product.availabilityStatus,
