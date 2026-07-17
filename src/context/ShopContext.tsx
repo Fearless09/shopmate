@@ -9,7 +9,7 @@ import {
 } from "react";
 import { fetcher, getData, saveData } from "@/lib/fetcher";
 import { calcTotal, cartTotal } from "@/lib/utils";
- 
+
 interface ShopContextType extends State {
   shopDispatcher: (acton: Action) => void;
 }
@@ -87,7 +87,8 @@ export const ShopProvider = (props: PropsWithChildren) => {
           error instanceof Error
             ? `${error.message}: Unable to initialise Shop data`
             : "Unknown Error: Unable to initialise Shop data";
-        throw Error(msg);
+
+        console.error(msg);
       } finally {
         shopDispatcher({ type: "toggle-loading", payload: false });
       }
@@ -223,20 +224,22 @@ const reducer = (state: State, action: Action): State => {
       function updateCart(): Cart | null {
         if (!state.cart) return state.cart;
 
-        const newCartProduct: CartProduct[] = state.cart.products.map((item) => {
-          if (item.id === payload.id) {
-            const quantity = Math.max(payload.quantity, 1);
-            const { total, discountedTotal } = calcTotal({
-              quantity,
-              price: item.price,
-              discountPercentage: item.discountPercentage,
-            });
+        const newCartProduct: CartProduct[] = state.cart.products.map(
+          (item) => {
+            if (item.id === payload.id) {
+              const quantity = Math.max(payload.quantity, 1);
+              const { total, discountedTotal } = calcTotal({
+                quantity,
+                price: item.price,
+                discountPercentage: item.discountPercentage,
+              });
 
-            return { ...item, quantity, total, discountedTotal };
-          } else {
-            return item;
-          }
-        });
+              return { ...item, quantity, total, discountedTotal };
+            } else {
+              return item;
+            }
+          },
+        );
 
         const { discountedTotal, total, totalProducts, totalQuantity } =
           cartTotal(newCartProduct);
