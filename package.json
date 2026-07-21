@@ -1,5 +1,6 @@
 {
   "name": "shopmate",
+  "description": "Discover thousands of products across beauty, electronics, fashion, and more. Shop smarter with Shopmate — fast, modern, and built for you.",
   "version": "0.1.0",
   "private": true,
   "scripts": {
