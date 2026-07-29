@@ -65,12 +65,12 @@ export default function Stats() {
     >
       <section
         id="stat-wrap"
-        className="wrapper grid grid-cols-2 gap-8 md:grid-cols-4"
+        className="wrapper grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8"
       >
         {statsData.map((stat, idx) => (
           <main
             key={stat.id}
-            className="transition-300 flex flex-col items-center justify-center rounded-2xl border border-neutral-200/60 bg-white p-6 shadow-sm hover:scale-102 dark:border-neutral-800/60 dark:bg-neutral-950"
+            className="transition-300 flex flex-col items-center justify-center rounded-2xl border border-neutral-200/60 bg-white px-4 py-6 text-center shadow-sm hover:scale-102 md:p-6 dark:border-neutral-800/60 dark:bg-neutral-950"
           >
             {/* Icon container */}
             <span

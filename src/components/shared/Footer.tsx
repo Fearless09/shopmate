@@ -10,7 +10,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full border-t border-neutral-800 bg-neutral-900 text-neutral-400 dark:bg-black dark:text-neutral-500">
-      <section className="wrapper py-16">
+      <section className="wrapper pt-16 pb-5">
         <main className="flex flex-wrap justify-between gap-10">
           {/* Logo & Intro */}
           <div className="max-w-xs flex-1 space-y-6">
@@ -98,12 +98,12 @@ export default function Footer() {
           </div>
         </main>
 
-        <hr className="my-12 border-neutral-800" />
+        <hr className="mt-12 mb-5 border-neutral-800" />
 
-        <main className="flex flex-col items-center justify-between gap-4 text-xs text-neutral-500 sm:flex-row">
+        <main className="flex flex-col items-center justify-between gap-x-4 gap-y-2.5 text-xs text-neutral-500 sm:flex-row">
           <p>© {new Date().getFullYear()} Shopmate Inc. All rights reserved.</p>
 
-          <div className="flex gap-6">
+          <div className="flex gap-4">
             {policyLinks.map(({ href, name }) => (
               <Link
                 key={name}

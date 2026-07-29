@@ -9,19 +9,19 @@ import { ProductCard, ProductCardWrapper } from "../shared/ProductCard";
 import { ProductCardSkeleton } from "../ui/Skeleton";
 import { EmptyState } from "../ui/EmptyState";
 import { Frown } from "lucide-react";
+import { useUpdateUrlQuery } from "@/hooks/useUpdateUrlQuery";
 
 type ProductionSectionProps = {
   currentPage: number;
   paginatedProducts: Product[];
-  emptyStateAction: () => void;
 };
 
 export default function ProductionSection({
   currentPage,
-  emptyStateAction,
   paginatedProducts,
 }: ProductionSectionProps) {
   const { loading } = useShop();
+  const { updateUrlQuery } = useUpdateUrlQuery();
   const gridRef = useRef<HTMLDivElement>(null);
 
   const searchParams = useSearchParams();
@@ -78,7 +78,14 @@ export default function ProductionSection({
           actionText="Reset All Filters"
           description="We couldn't find any products matching your current search query or active category filters."
           icon={Frown}
-          onAction={() => emptyStateAction()}
+          onAction={() => {
+            updateUrlQuery({
+              category: "all",
+              search: "",
+              sort: "default",
+              page: "1",
+            });
+          }}
           title="No Products Found"
         />
       )}

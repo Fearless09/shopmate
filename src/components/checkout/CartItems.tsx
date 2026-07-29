@@ -143,7 +143,7 @@ function CartItemRow({ item }: CartItemRowProps) {
 
         {/* Pricing Subtotals & Removals click-trigger */}
         <div className="flex items-center gap-4">
-          <div className="min-w-[70px] text-right">
+          <div className="min-w-17.5 text-right">
             <span className="block text-sm font-extrabold text-neutral-900 dark:text-white">
               {formatCurrency(item.discountedTotal)}
             </span>

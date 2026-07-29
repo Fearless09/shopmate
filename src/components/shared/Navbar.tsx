@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
- import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useScrollY } from "@/hooks/useScrollY";
@@ -15,7 +15,7 @@ import {
 import { DropdownItem } from "../ui/Dropdown";
 
 export default function Navbar() {
-   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScrollY();
 
   return (
@@ -89,7 +89,7 @@ export default function Navbar() {
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Features", href: "#features" },
+  { name: "Features", href: "/#features" },
   { name: "Shop", href: "/products" },
   // { name: "Categories", href: "/products" },
 ];

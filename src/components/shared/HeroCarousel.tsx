@@ -139,7 +139,7 @@ export default function HeroCarousel() {
       <section className="wrapper">
         <section className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           {/* Content Left */}
-          <main className="flex flex-col justify-center space-y-6 text-left">
+          <main className="flex flex-col items-center justify-center space-y-6 text-center md:items-start md:text-left">
             <span
               className={cn(
                 `flex w-max items-center rounded-full bg-linear-to-r px-3 py-1 text-xs font-semibold tracking-wider text-white shadow-sm`,
@@ -196,7 +196,7 @@ export default function HeroCarousel() {
           <main className="flex items-center justify-center">
             <main
               id="slide-image"
-              className="relative aspect-square w-full max-w-[320px] overflow-hidden rounded-3xl border border-white/20 bg-neutral-200/40 p-4 shadow-2xl backdrop-blur-sm sm:max-w-[400px] md:max-w-[480px] dark:bg-neutral-800/20"
+              className="relative aspect-square w-full max-w-[320px] overflow-hidden rounded-3xl border border-white/20 bg-neutral-200/40 p-4 shadow-2xl backdrop-blur-sm sm:max-w-100 md:max-w-120 dark:bg-neutral-800/20"
             >
               {/* Decorative Circle Gradients */}
               <span
@@ -212,7 +212,7 @@ export default function HeroCarousel() {
                   src={slide.image}
                   alt={slide.subtitle}
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="100%"
                   className="object-cover object-center"
                   preload={current === 0 ? true : false}
                 />

@@ -267,7 +267,7 @@ const Details = ({ onReview, product }: DetailProps) => {
       )}
 
       {/* Quick Specifications summary */}
-      <main className="anim-fade-in grid grid-cols-1 gap-3 border-t border-neutral-200/50 pt-6 sm:grid-cols-3 dark:border-neutral-800/40">
+      <main className="anim-fade-in flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-t border-neutral-200/50 pt-6 dark:border-neutral-800/40">
         <Summary Icon={Truck} title={product.shippingInformation} />
         <Summary Icon={ShieldCheck} title={product.warrantyInformation} />
         <Summary Icon={RotateCcw} title={product.returnPolicy} />

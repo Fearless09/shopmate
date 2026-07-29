@@ -62,7 +62,7 @@ const Reviews = ({ product }: ReviewsProp) => {
                     <h4 className="text-sm font-bold text-neutral-900 dark:text-white">
                       {r.reviewerName}
                     </h4>
-                    <span className="text-[10px] font-semibold text-neutral-400">
+                    <span className="text-[11px] font-semibold text-neutral-400">
                       {r.reviewerEmail}
                     </span>
                   </div>

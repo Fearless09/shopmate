@@ -17,7 +17,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const { shopDispatcher, wishList, cart } = useShop();
 
   const isWishlisted = wishList.some((p) => p.id === product.id);
-  const isCarted = cart ? cart.products.some((p) => p.id === product.id) : false;
+  const isCarted = cart
+    ? cart.products.some((p) => p.id === product.id)
+    : false;
 
   const cartProduct: CartProduct = useMemo(
     () => toCartProduct(product, 1),
@@ -72,7 +74,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       {/* Product Info Block */}
-      <div className="flex grow flex-col p-4 text-left">
+      <div className="flex grow flex-col px-3 py-4 text-left sm:p-4">
         {/* Category */}
         <span className="block text-[10px] font-bold tracking-wider text-indigo-600 uppercase dark:text-indigo-400">
           {product.category}
@@ -139,7 +141,7 @@ export function ProductCardWrapper({
   return (
     <main
       className={cn(
-        "mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+        "mt-4 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4",
         className,
       )}
       {...props}

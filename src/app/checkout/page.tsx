@@ -85,7 +85,7 @@ export default function CheckoutPage() {
             <CartItems cart={cart} />
 
             <aside>
-              <section className="summary-anim sticky top-24 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/40">
+              <section className="summary-anim sticky top-24 rounded-3xl border border-neutral-200 bg-white px-4 py-6 shadow-sm sm:p-6 dark:border-neutral-800 dark:bg-neutral-900/40">
                 <Summary cart={cart} />
                 <Shipping
                   onSuccess={() => setIsSuccess(true)}

@@ -6,19 +6,19 @@ import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { DropdownItem } from "../ui/Dropdown";
 import { getCategoryCount } from "@/lib/product";
+import { useUpdateUrlQuery } from "@/hooks/useUpdateUrlQuery";
 
 type SideBarProps = {
   localSearch: string;
   changeLocalSearch: (str: string) => void;
-  updateQuery: (updates: Record<string, string | null>) => void;
 };
 
 export default function Sidebar({
   changeLocalSearch,
   localSearch,
-  updateQuery,
 }: SideBarProps) {
   const { categories, products } = useShop();
+  const { updateUrlQuery } = useUpdateUrlQuery();
 
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all";
@@ -34,7 +34,7 @@ export default function Sidebar({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            updateQuery({ search: localSearch, page: "1" });
+            updateUrlQuery({ search: localSearch, page: "1" });
           }}
           className="relative"
         >
@@ -68,7 +68,7 @@ export default function Sidebar({
               <DropdownItem
                 key={cat.slug}
                 onClick={() => {
-                  updateQuery({ category: cat.slug, page: "1" });
+                  updateUrlQuery({ category: cat.slug, page: "1" });
                   scrollToById("products-grid-section");
                 }}
                 className={cn("rounded-xl px-4 py-2.5 font-medium capitalize", {

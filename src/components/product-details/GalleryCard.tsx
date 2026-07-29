@@ -26,6 +26,7 @@ export default function GalleryCard({
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="transition-300 object-contain p-6 hover:scale-105"
             priority
+            loading="eager"
           />
         ) : (
           <span className="flex size-full items-center justify-center text-neutral-400">

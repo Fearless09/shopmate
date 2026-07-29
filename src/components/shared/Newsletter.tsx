@@ -46,7 +46,7 @@ export default function Newsletter() {
       <span className="absolute top-1/2 right-1/4 size-64 -translate-y-1/2 rounded-full bg-violet-500/10 blur-3xl" />
 
       <section className="wrapper relative max-w-5xl">
-        <section className="rounded-3xl border border-neutral-200/60 bg-white p-8 shadow-xl backdrop-blur-md md:p-12 dark:border-neutral-800/60 dark:bg-neutral-950/80">
+        <section className="rounded-3xl border border-neutral-200/60 bg-white px-5 py-8 shadow-xl backdrop-blur-md md:py-12 dark:border-neutral-800/60 dark:bg-neutral-950/80">
           <section className="mx-auto max-w-2xl space-y-6 text-center">
             <span className="inline-flex items-center justify-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
               STAY TUNED

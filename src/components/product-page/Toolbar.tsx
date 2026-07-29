@@ -1,6 +1,7 @@
 "use client";
 
 import { sortingOptions } from "@/data/sorting";
+import { useUpdateUrlQuery } from "@/hooks/useUpdateUrlQuery";
 import { cn } from "@/lib/utils";
 import { ArrowUpDown, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -10,7 +11,6 @@ type ToolbarProps = {
   startIndex: number;
   endIndex: number;
   clearLocalsearch: () => void;
-  updateQuery: (updates: Record<string, string | null>) => void;
   openMobileFilters: () => void;
 };
 
@@ -20,8 +20,8 @@ export default function Toolbar({
   openMobileFilters,
   startIndex,
   totalItems,
-  updateQuery,
 }: ToolbarProps) {
+  const { updateUrlQuery } = useUpdateUrlQuery();
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search") || "";
@@ -61,19 +61,19 @@ export default function Toolbar({
             <Pill
               closeFn={() => {
                 clearLocalsearch();
-                updateQuery({ search: "" });
+                updateUrlQuery({ search: "" });
               }}
               title="Search"
               value={search}
             />
             <Pill
-              closeFn={() => updateQuery({ category: "all" })}
+              closeFn={() => updateUrlQuery({ category: "all" })}
               title="Category"
               value={category === "all" ? "" : category.replace("-", " ")}
               colored
             />
             <Pill
-              closeFn={() => updateQuery({ sort: "default" })}
+              closeFn={() => updateUrlQuery({ sort: "default" })}
               title="Sort"
               value={activeSort === "Default Sorting" ? "" : activeSort}
             />
@@ -90,7 +90,9 @@ export default function Toolbar({
 
           <select
             value={sortBy}
-            onChange={(e) => updateQuery({ sort: e.target.value, page: "1" })}
+            onChange={(e) =>
+              updateUrlQuery({ sort: e.target.value, page: "1" })
+            }
             className="cursor-pointer appearance-none bg-transparent py-2.5 pr-8.5 pl-1.5 text-sm font-semibold text-neutral-600 focus:outline-none dark:text-neutral-400"
             style={{ backgroundImage: "none" }}
           >

@@ -24,7 +24,7 @@ export default function BreadCrumbs({ category, title }: Product) {
             {category.replace("-", " ")}
           </Link>
           <span>/</span>
-          <span className="line-clamp-1 max-w-[200px] text-neutral-900 capitalize dark:text-white">
+          <span className="line-clamp-1 max-w-50 text-neutral-900 capitalize dark:text-white">
             {title}
           </span>
         </main>

@@ -54,13 +54,13 @@ export default function Features() {
 
         <main
           ref={containerRef}
-          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-5 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4"
         >
           {featuresList.map((feature) => (
             <div
               key={feature.id}
               className={cn(
-                "group transition-300 flex flex-col rounded-2xl border p-6 shadow-md hover:-translate-y-1 hover:shadow-lg",
+                "group transition-300 flex flex-col rounded-2xl border py-6 px-5 sm:p-6 shadow-md hover:-translate-y-1 hover:shadow-lg",
                 "border-neutral-100 bg-neutral-50 hover:border-indigo-100 hover:bg-indigo-50/10 hover:shadow-indigo-500/5",
                 "dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:border-indigo-950 dark:hover:bg-indigo-950/10",
               )}

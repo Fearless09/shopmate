@@ -8,10 +8,10 @@ export const getCategoryCount = (catSlug: string, products: Product[]) => {
   ).length;
 };
 
-// Generate pagination buttons sequence (supports ellipses if total pages > 7)
+// Generate pagination buttons sequence (supports ellipses if total pages > 5)
 export const getPageNumbers = (current: number, total: number) => {
   const pages: number[] = [];
-  if (total <= 7) {
+  if (total <= 5) {
     for (let i = 1; i <= total; i++) pages.push(i);
   } else {
     pages.push(1);

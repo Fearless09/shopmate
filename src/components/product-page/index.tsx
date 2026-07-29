@@ -2,7 +2,7 @@
 
 import { useShop } from "@/context/ShopContext";
 import { filterProduct } from "@/lib/product";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "./Sidebar";
 import { scrollToById } from "@/lib/utils";
@@ -11,12 +11,12 @@ import ProductionSection from "./ProductSection";
 import Pagination from "./Pagination";
 import MobileDrawer from "./MobileDrawer";
 import Banner from "../shared/Banner";
+import { useUpdateUrlQuery } from "@/hooks/useUpdateUrlQuery";
 
 export default function ProductsCatalog() {
   const { products } = useShop();
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { updateUrlQuery } = useUpdateUrlQuery();
 
   // Search parameters from URL
   const search = searchParams.get("search") || "";
@@ -38,31 +38,12 @@ export default function ProductsCatalog() {
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (localSearch !== search) {
-        updateQuery({ search: localSearch, page: "1" });
+        updateUrlQuery({ search: localSearch, page: "1" });
       }
     }, 450);
 
     return () => clearTimeout(delayDebounce);
   }, [localSearch]);
-
-  // URL state synchronization helper
-  const updateQuery = (updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    Object.entries(updates).forEach(([key, val]) => {
-      if (
-        val === null ||
-        val === "" ||
-        (key === "page" && val === "1") ||
-        (key === "category" && val === "all") ||
-        (key === "sort" && val === "default")
-      ) {
-        params.delete(key);
-      } else {
-        params.set(key, val);
-      }
-    });
-    router.push(pathname + "?" + params.toString(), { scroll: false });
-  };
 
   // Filter products list based on query parameters (no limit/slicing in utils)
   const filteredProducts = useMemo(() => {
@@ -105,11 +86,7 @@ export default function ProductsCatalog() {
         className="wrapper mb-10 grid scroll-mt-24 grid-cols-1 gap-8 pt-10 lg:grid-cols-4"
         id="products-grid-section"
       >
-        <Sidebar
-          localSearch={localSearch}
-          changeLocalSearch={setLocalSearch}
-          updateQuery={updateQuery}
-        />
+        <Sidebar localSearch={localSearch} changeLocalSearch={setLocalSearch} />
 
         {/* Main Grid & Filters Content */}
         <main className="space-y-6 lg:col-span-3">
@@ -120,30 +97,18 @@ export default function ProductsCatalog() {
             openMobileFilters={() => setMobileFiltersOpen(true)}
             startIndex={startIndex}
             totalItems={totalItems}
-            updateQuery={updateQuery}
           />
 
           {/* Products Grid Content */}
           <ProductionSection
             currentPage={currentPage}
-            emptyStateAction={() => {
-              updateQuery({
-                category: "all",
-                search: "",
-                sort: "default",
-                page: "1",
-              });
-            }}
             paginatedProducts={paginatedProducts}
           />
 
           {/* Pagination Component */}
           <Pagination
             currentPage={currentPage}
-            handlePageChange={(newPage) => {
-              updateQuery({ page: newPage.toString() });
-              scrollToById("products-grid-section");
-            }}
+            handlePageChange={() => scrollToById("products-grid-section")}
             totalPages={totalPages}
           />
         </main>
@@ -154,7 +119,6 @@ export default function ProductsCatalog() {
         changeLocalSearch={(str) => setLocalSearch(str)}
         mobileFiltersOpen={mobileFiltersOpen}
         localSearch={localSearch}
-        updateQuery={updateQuery}
         closeMobileFilters={() => setMobileFiltersOpen(false)}
       />
     </>

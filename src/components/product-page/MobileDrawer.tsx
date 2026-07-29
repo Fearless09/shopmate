@@ -6,13 +6,14 @@ import { cn } from "@/lib/utils";
 import { Search, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { DropdownItem } from "../ui/Dropdown";
+import { useUpdateUrlQuery } from "@/hooks/useUpdateUrlQuery";
+import { useEffect } from "react";
 
 type MobileDrawerProp = {
   mobileFiltersOpen: boolean;
   closeMobileFilters: () => void;
   localSearch: string;
   changeLocalSearch: (str: string) => void;
-  updateQuery: (updates: Record<string, string | null>) => void;
 };
 
 export default function MobileDrawer({
@@ -20,12 +21,21 @@ export default function MobileDrawer({
   mobileFiltersOpen,
   changeLocalSearch,
   localSearch,
-  updateQuery,
 }: MobileDrawerProp) {
   const { categories, products } = useShop();
+  const { updateUrlQuery } = useUpdateUrlQuery();
 
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all";
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    if (mobileFiltersOpen) {
+      body?.classList.add("overflow-hidden");
+    } else {
+      body?.classList.remove("overflow-hidden");
+    }
+  }, [mobileFiltersOpen]);
 
   return (
     <section
@@ -74,7 +84,7 @@ export default function MobileDrawer({
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                updateQuery({ search: localSearch, page: "1" });
+                updateUrlQuery({ search: localSearch, page: "1" });
                 closeMobileFilters();
               }}
               className="relative"
@@ -109,7 +119,7 @@ export default function MobileDrawer({
                   <DropdownItem
                     key={cat.slug}
                     onClick={() => {
-                      updateQuery({ category: cat.slug, page: "1" });
+                      updateUrlQuery({ category: cat.slug, page: "1" });
                       closeMobileFilters();
                     }}
                     className={cn(

@@ -1,8 +1,9 @@
 "use client";
 
+import { useUpdateUrlQuery } from "@/hooks/useUpdateUrlQuery";
 import { getPageNumbers } from "@/lib/product";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Ellipsis } from "lucide-react";
 import { ComponentProps } from "react";
 
 type PaginationProps = {
@@ -16,6 +17,13 @@ export default function Pagination({
   handlePageChange,
   totalPages,
 }: PaginationProps) {
+  const { updateUrlQuery } = useUpdateUrlQuery();
+
+  const handleClick = (newPage: number) => {
+    updateUrlQuery({ page: newPage.toString() });
+    handlePageChange(newPage);
+  };
+
   if (totalPages < 2) return null;
 
   return (
@@ -27,11 +35,11 @@ export default function Pagination({
         <span className="text-neutral-800 dark:text-white">{totalPages}</span>
       </p>
 
-      <nav className="flex items-center gap-1.5">
+      <nav className="flex flex-wrap items-center gap-1.5">
         {/* Prev Button */}
         <Button
           onClick={() => {
-            handlePageChange(Math.max(currentPage - 1, 1));
+            handleClick(Math.max(currentPage - 1, 1));
           }}
           disabled={currentPage === 1}
         >
@@ -44,16 +52,16 @@ export default function Pagination({
             return (
               <span
                 key={`ellipse-${idx}`}
-                className="px-2 font-semibold text-neutral-400 select-none"
+                className="flex items-center justify-center px-1 font-semibold text-neutral-400 select-none"
               >
-                ...
+                <Ellipsis className="size-4.5" />
               </span>
             );
           }
           return (
             <Button
               key={`page-${p}`}
-              onClick={() => handlePageChange(p)}
+              onClick={() => handleClick(p)}
               active={currentPage === p}
             >
               {p}
@@ -64,7 +72,7 @@ export default function Pagination({
         {/* Next Button */}
         <Button
           onClick={() => {
-            handlePageChange(Math.min(currentPage + 1, totalPages));
+            handleClick(Math.min(currentPage + 1, totalPages));
           }}
           disabled={currentPage === totalPages}
         >
@@ -80,7 +88,7 @@ const Button = ({ className, active, ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
-        "transition-300 flex size-10 cursor-pointer items-center justify-center rounded-xl bg-white text-sm font-bold text-neutral-600 disabled:pointer-events-none disabled:opacity-40",
+        "transition-300 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-white text-sm font-bold text-neutral-600 disabled:pointer-events-none disabled:opacity-40",
         "[&>svg]:size-5",
         {
           "bg-indigo-600 text-white shadow-md shadow-indigo-600/20": active,
