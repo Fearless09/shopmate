@@ -9,7 +9,7 @@ import { CartDropdownItem, DropdownItem, DropdownWrapper } from "./Dropdown";
 import Link from "next/link";
 import { EmptyState } from "./EmptyState";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CartItemSkeleton } from "./Skeleton";
 import { toCartProduct } from "@/lib/product";
 
@@ -136,6 +136,7 @@ export const SearchAction = () => {
     toggleIsOpen(false);
     setValue("");
   });
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const searchProducts = useMemo(() => {
     if (!value) return [];
@@ -154,6 +155,10 @@ export const SearchAction = () => {
 
     return transfromProduct;
   }, [products, value]);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) inputRef.current.focus();
+  }, [inputRef.current, isOpen]);
 
   return (
     <main ref={ref} className="relative">
@@ -180,6 +185,7 @@ export const SearchAction = () => {
       >
         {isOpen && (
           <input
+            ref={inputRef}
             id="nav-search"
             type="search"
             value={value}
