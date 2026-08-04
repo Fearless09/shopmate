@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ComponentProps, useCallback, useMemo, useState } from "react";
 
 export default function GalleryCard({
   images,
@@ -8,26 +9,41 @@ export default function GalleryCard({
   title,
   discountPercentage,
 }: Product) {
-  const [activeImage, setActiveImage] = useState("");
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  useEffect(() => {
-    if (images.length === 0 && !thumbnail) return;
-    setActiveImage(images[0] || thumbnail);
-  }, [images, thumbnail]);
+  const activeImage = useMemo(() => {
+    return images[activeIndex] ?? thumbnail;
+  }, [images, thumbnail, activeIndex]);
+
+  const onSlide = useCallback(
+    (direction: "next" | "prev") => {
+      setActiveIndex((prev) => {
+        if (direction === "next") {
+          return prev < images.length - 1 ? prev + 1 : 0;
+        }
+        return prev > 0 ? prev - 1 : images.length - 1;
+      });
+    },
+    [images.length],
+  );
 
   return (
     <section className="space-y-4 self-start">
       <main className="relative aspect-square w-full overflow-hidden rounded-3xl border border-neutral-200/60 bg-white shadow-sm dark:border-neutral-800/60 dark:bg-neutral-900/40">
-        {images && images.length > 0 ? (
-          <Image
-            src={activeImage || thumbnail}
-            alt={title}
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="transition-300 object-contain p-6 hover:scale-105"
-            priority
-            loading="eager"
-          />
+        {activeImage ? (
+          <>
+            <SliderControl position="left" onClick={() => onSlide("prev")} />
+            <Image
+              src={activeImage}
+              alt={title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="transition-300 object-contain p-6 hover:scale-105"
+              priority
+              loading="eager"
+            />
+            <SliderControl position="right" onClick={() => onSlide("next")} />
+          </>
         ) : (
           <span className="flex size-full items-center justify-center text-neutral-400">
             No image available
@@ -48,7 +64,7 @@ export default function GalleryCard({
           {images.map((img, idx) => (
             <button
               key={idx}
-              onClick={() => setActiveImage(img)}
+              onClick={() => setActiveIndex(idx)}
               className={cn(
                 "transition-300 relative size-20 cursor-pointer overflow-hidden rounded-2xl border bg-white p-1 hover:opacity-90 dark:bg-neutral-900/60",
                 "border-neutral-200 dark:border-neutral-800",
@@ -74,3 +90,28 @@ export default function GalleryCard({
     </section>
   );
 }
+
+type SliderControlProps = ComponentProps<"button"> & {
+  position: "left" | "right";
+};
+const SliderControl = ({
+  position = "left",
+  className,
+  type = "button",
+  ...props
+}: SliderControlProps) => {
+  return (
+    <button
+      className={cn(
+        "transition-300 absolute top-1/2 z-2 -translate-y-full cursor-pointer rounded-lg border border-neutral-200 p-1.25 text-neutral-500 backdrop-blur-sm active:scale-95 dark:border-neutral-800 [&>svg]:size-4.75 [&>svg]:stroke-3",
+        "ring-indigo-600/30 focus:border-indigo-600 focus:ring-2 dark:ring-indigo-400/30 dark:focus:border-indigo-400",
+        { "right-2": position === "right", "left-2": position === "left" },
+        className,
+      )}
+      type={type}
+      {...props}
+    >
+      {position === "left" ? <ChevronLeft /> : <ChevronRight />}
+    </button>
+  );
+};

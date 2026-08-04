@@ -19,7 +19,7 @@ export default function BreadCrumbs({ category, title }: Product) {
           <span>/</span>
           <Link
             href={`/products?category=${category}`}
-            className="capitalize transition-colors hover:text-indigo-600"
+            className="transition-300 hover:text-indigo-600"
           >
             {category.replace("-", " ")}
           </Link>
