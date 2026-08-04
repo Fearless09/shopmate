@@ -29,10 +29,9 @@ export default function GalleryCard({
 
   return (
     <section className="space-y-4 self-start">
-      <main className="relative aspect-square w-full overflow-hidden rounded-3xl border border-neutral-200/60 bg-white shadow-sm dark:border-neutral-800/60 dark:bg-neutral-900/40">
+      <main className="group relative aspect-square w-full overflow-hidden rounded-3xl border border-neutral-200/60 bg-white shadow-sm dark:border-neutral-800/60 dark:bg-neutral-900/40">
         {activeImage ? (
           <>
-            <SliderControl position="left" onClick={() => onSlide("prev")} />
             <Image
               src={activeImage}
               alt={title}
@@ -42,7 +41,18 @@ export default function GalleryCard({
               priority
               loading="eager"
             />
-            <SliderControl position="right" onClick={() => onSlide("next")} />
+            {images.length > 1 && (
+              <>
+                <SliderControl
+                  position="left"
+                  onClick={() => onSlide("prev")}
+                />
+                <SliderControl
+                  position="right"
+                  onClick={() => onSlide("next")}
+                />
+              </>
+            )}
           </>
         ) : (
           <span className="flex size-full items-center justify-center text-neutral-400">
@@ -52,7 +62,7 @@ export default function GalleryCard({
 
         {/* Discount Stamp Badge */}
         {discountPercentage > 0 && (
-          <span className="absolute top-4 left-4 rounded-xl bg-rose-500 px-3 py-1 text-xs font-extrabold tracking-wide text-white shadow-md">
+          <span className="absolute top-4 left-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-extrabold tracking-wide text-white shadow-md">
             {Math.round(discountPercentage)}% SAVED
           </span>
         )}
@@ -103,9 +113,12 @@ const SliderControl = ({
   return (
     <button
       className={cn(
-        "transition-300 absolute top-1/2 z-2 -translate-y-full cursor-pointer rounded-lg border border-neutral-200 p-1.25 text-neutral-500 backdrop-blur-sm active:scale-95 dark:border-neutral-800 [&>svg]:size-4.75 [&>svg]:stroke-3",
+        "transition-300 absolute top-1/2 z-2 -translate-y-full cursor-pointer rounded-lg border border-neutral-200 p-1.25 text-neutral-500 backdrop-blur-sm group-hover:translate-x-0 active:scale-95 dark:border-neutral-800 [&>svg]:size-4.75 [&>svg]:stroke-3",
         "ring-indigo-600/30 focus:border-indigo-600 focus:ring-2 dark:ring-indigo-400/30 dark:focus:border-indigo-400",
-        { "right-2": position === "right", "left-2": position === "left" },
+        {
+          "right-2 sm:translate-x-11": position === "right",
+          "left-2 sm:-translate-x-11": position === "left",
+        },
         className,
       )}
       type={type}
